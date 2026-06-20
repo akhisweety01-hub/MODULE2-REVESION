@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MID MODULE 2 REVESION | FULL SYLLABUS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></script>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg-void: #07080f;
+  --bg-deep: #0b0e1a;
+  --bg-panel: rgba(14,16,36,0.68);
+  --bg-panel-solid: #0d1028;
+  --ink-bright: #f0f4ff;
+  --ink-soft: #b4bede;
+  --ink-faint: #6a74a0;
+  --teal: #00D9FF;
+  --teal-dim: #5B5FEF;
+  --amber: #f2b94f;
+  --coral: #ef7b6b;
+  --violet: #A855F7;
+  --indigo: #5B5FEF;
+  --cyan: #00D9FF;
+  --border-glass: rgba(91,95,239,0.20);
+  --border-glow: rgba(0,217,255,0.50);
+  --shadow-deep: 0 20px 60px -15px rgba(0,0,0,0.65);
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family: var(--font-body);
+  background: var(--bg-void);
+  color: var(--ink-soft);
+  overflow-x:hidden;
+  position:relative;
+  min-height:100vh;
+}
+
+/* ===== Animated gradient backdrop (static base; WebGL canvas paints the motion) ===== */
+.gradient-backdrop{
+  position:fixed; inset:0; z-index:-4;
+  background:
+    radial-gradient(ellipse 80% 50% at 18% -8%, rgba(91,95,239,0.22), transparent),
+    radial-gradient(ellipse 70% 50% at 96% 8%,  rgba(168,85,247,0.18), transparent),
+    radial-gradient(ellipse 60% 40% at 50% 100%,rgba(0,217,255,0.14), transparent),
+    linear-gradient(170deg, #07080f 0%, #0b0e1a 55%, #08091a 100%);
+}
+.grain-overlay{
+  position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:0.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ===== WebGL ripple/gradient canvas + antigravity particle canvas ===== */
+#rippleCanvas{
+  position:fixed; inset:0; z-index:-3; pointer-events:none; display:block;
+}
+#particleCanvas{
+  position:fixed; inset:0; z-index:-2; pointer-events:none; display:block;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar{width:9px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background: linear-gradient(var(--indigo), var(--violet)); border-radius:10px;}
+
+/* ===== Top progress bar ===== */
+#topProgress{
+  position:fixed; top:0; left:0; height:3px; width:0%;
+  background: linear-gradient(90deg, var(--indigo), var(--violet), var(--cyan));
+  z-index:200; transition: width 0.15s ease-out;
+  box-shadow: 0 0 12px rgba(0,217,255,0.7);
+}
+
+/* ===== Header / Nav ===== */
+header.site-header{
+  position:fixed; top:0; left:0; right:0; z-index:150;
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 14px 28px;
+  background: rgba(8,14,20,0.55);
+  backdrop-filter: blur(18px) saturate(140%);
+  border-bottom:1px solid var(--border-glass);
+}
+.brand{
+  display:flex; align-items:center; gap:12px;
+  font-family: var(--font-display);
+  font-weight:600; font-size:1.18rem; color: var(--ink-bright);
+  letter-spacing:0.2px;
+}
+.brand .mark{
+  width:34px;height:34px; border-radius:9px;
+  background: linear-gradient(135deg, var(--indigo), var(--violet));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono); font-weight:700; color:#fff; font-size:0.85rem;
+  box-shadow: 0 4px 18px rgba(91,95,239,0.45);
+}
+.brand .sub{
+  font-family: var(--font-body); font-weight:500; font-size:0.68rem;
+  color: var(--ink-faint); letter-spacing:1.5px; text-transform:uppercase;
+  display:block; margin-top:1px;
+}
+#menuToggle{
+  display:none; background:none; border:1px solid var(--border-glass);
+  color: var(--ink-bright); width:42px; height:42px; border-radius:10px; font-size:1.1rem;
+  cursor:pointer;
+}
+
+nav.module-nav{
+  display:flex; gap:4px; flex-wrap:wrap; align-items:center;
+}
+nav.module-nav button{
+  background:transparent; border:1px solid transparent; color: var(--ink-faint);
+  font-family: var(--font-body); font-size:0.78rem; font-weight:600;
+  padding:8px 13px; border-radius:8px; cursor:pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  white-space:nowrap;
+}
+nav.module-nav button:hover{
+  color: var(--ink-bright); background: rgba(91,95,239,0.10); border-color: var(--border-glass);
+  transform: translateY(-2px);
+}
+nav.module-nav button.active{
+  color: #fff; background: var(--indigo); border-color: var(--indigo);
+  box-shadow: 0 4px 16px rgba(91,95,239,0.5);
+}
+
+/* ===== Layout shell ===== */
+main{ padding-top:78px; position:relative; z-index:1; }
+.section-wrap{
+  max-width:1180px; margin: 0 auto; padding: 70px 28px 40px;
+  min-height:60vh;
+}
+.hero-wrap{ max-width:1180px; margin:0 auto; padding: 150px 28px 90px; text-align:center; }
+
+/* ===== Typography ===== */
+h1,h2,h3,h4{ font-family: var(--font-display); color: var(--ink-bright); line-height:1.15; }
+.eyebrow{
+  font-family: var(--font-mono); font-size:0.74rem; letter-spacing:2.5px;
+  text-transform:uppercase; color: var(--cyan); display:flex; align-items:center; gap:10px;
+  margin-bottom:14px; font-weight:600;
+}
+.eyebrow::before{ content:''; width:26px; height:1px; background: var(--cyan); display:inline-block; }
+.hero-title{ font-size: clamp(2.4rem, 5.2vw, 4.6rem); font-weight:600; letter-spacing:-1px; }
+.hero-title em{ font-style:italic; color: var(--cyan); font-weight:500; }
+.hero-sub{ font-size:1.08rem; color: var(--ink-soft); max-width:680px; margin: 22px auto 0; line-height:1.7; }
+.module-title{ font-size: clamp(1.9rem, 3.4vw, 2.7rem); font-weight:600; margin-bottom:10px; }
+.module-desc{ font-size:1rem; color: var(--ink-soft); max-width:760px; line-height:1.7; margin-bottom:40px; }
+p{ line-height:1.75; }
+a{ color: var(--teal); text-decoration:none; }
+code{ font-family: var(--font-mono); }
+
+/* ===== Theory blocks ===== */
+.theory-block{
+  padding:28px 30px; margin-bottom:24px;
+}
+.theory-block h3{
+  font-size:1.25rem; margin-bottom:14px; display:flex; align-items:center; gap:10px;
+}
+.theory-block h3 i{ color: var(--cyan); font-size:1.05rem; }
+.theory-block p{ color: var(--ink-soft); margin-bottom:12px; font-size:0.96rem; }
+.theory-block p:last-child{ margin-bottom:0; }
+.theory-block ul, .theory-block ol{ color: var(--ink-soft); margin: 10px 0 14px 22px; font-size:0.95rem; line-height:1.8;}
+.theory-block li{ margin-bottom:6px; }
+.theory-block strong{ color: var(--ink-bright); font-weight:600; }
+.math-box{
+  background: rgba(6,8,20,0.65); border-left:3px solid var(--indigo);
+  border-radius:8px; padding:16px 20px; margin:14px 0; overflow-x:auto;
+  font-size:0.95rem;
+}
+
+/* ===== Code blocks ===== */
+.code-block{
+  background:#0a1420; border:1px solid var(--border-glass); border-radius:10px;
+  margin:16px 0; overflow:hidden;
+}
+.code-block .code-head{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:8px 16px; background: rgba(45,212,191,0.06); border-bottom:1px solid var(--border-glass);
+  font-family: var(--font-mono); font-size:0.72rem; color: var(--ink-faint); letter-spacing:0.5px;
+}
+.code-block .code-head button{
+  background:none;border:none;color:var(--teal);cursor:pointer;font-family:var(--font-mono);font-size:0.7rem;
+}
+.code-block pre{
+  margin:0; padding:16px 20px; overflow-x:auto; font-family: var(--font-mono);
+  font-size:0.84rem; line-height:1.65; color:#c9e8e2;
+}
+.code-block .c-kw{color:#8b7fd8;} .code-block .c-str{color:#f2b94f;} .code-block .c-com{color:#5d7a8c; font-style:italic;}
+.code-block .c-fn{color:#2dd4bf;} .code-block .c-num{color:#ef7b6b;}
+
+/* ===== Grid layouts ===== */
+.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+.grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; }
+
+/* ===== Flipcards ===== */
+.flip-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:20px; margin: 18px 0 30px; }
+.flip-card{
+  perspective:1400px; height:200px; cursor:pointer;
+}
+.flip-inner{
+  position:relative; width:100%; height:100%; transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style:preserve-3d;
+}
+.flip-card.flipped .flip-inner{ transform: rotateY(180deg); }
+.flip-face{
+  position:absolute; inset:0; backface-visibility:hidden;
+  border-radius:14px; padding:20px; display:flex; flex-direction:column; justify-content:center;
+  border:1px solid var(--border-glass);
+}
+.flip-front{
+  background: linear-gradient(150deg, rgba(91,95,239,0.14), rgba(14,16,36,0.7));
+}
+.flip-front .tag{ font-family:var(--font-mono); font-size:0.66rem; color:var(--cyan); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px;}
+.flip-front h4{ font-size:1.05rem; color:var(--ink-bright); font-family:var(--font-body); font-weight:700; }
+.flip-front .hint{ margin-top:auto; font-size:0.72rem; color: var(--ink-faint); display:flex; align-items:center; gap:6px;}
+.flip-back{
+  background: linear-gradient(150deg, rgba(168,85,247,0.20), rgba(10,11,22,0.92));
+  transform: rotateY(180deg); overflow-y:auto;
+}
+.flip-back p{ font-size:0.84rem; color: var(--ink-soft); line-height:1.6; }
+.flip-back .tag{ font-family:var(--font-mono); font-size:0.62rem; color:var(--violet); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px;}
+
+/* ===== Diagram boxes ===== */
+.diagram-box{
+  padding:26px; margin:20px 0; text-align:center; overflow-x:auto;
+}
+.diagram-box svg{ max-width:100%; height:auto; }
+.diagram-caption{ font-size:0.8rem; color:var(--ink-faint); margin-top:14px; font-style:italic; }
+
+/* ===== Quiz ===== */
+.quiz-box{ padding:28px 30px; margin: 24px 0; }
+.quiz-box h3{ font-size:1.1rem; margin-bottom:18px; display:flex; align-items:center; gap:10px;}
+.quiz-box h3 i{ color: var(--amber); }
+.quiz-q{ font-size:0.96rem; color:var(--ink-bright); margin-bottom:14px; font-weight:600; }
+.quiz-opts{ display:flex; flex-direction:column; gap:10px; margin-bottom:14px; }
+.quiz-opt{
+  text-align:left; padding:12px 16px; border-radius:10px; border:1px solid var(--border-glass);
+  background: rgba(255,255,255,0.02); color: var(--ink-soft); cursor:pointer; font-size:0.88rem;
+  transition: all 0.25s ease; font-family:var(--font-body);
+}
+.quiz-opt:hover{ border-color: var(--indigo); transform: translateX(4px); box-shadow: 0 0 0 1px rgba(91,95,239,0.25); }
+.quiz-opt.correct{ background: rgba(0,217,255,0.12); border-color: var(--cyan); color: var(--ink-bright); }
+.quiz-opt.wrong{ background: rgba(239,123,107,0.14); border-color: var(--coral); color: var(--ink-bright); }
+.quiz-explain{
+  display:none; padding:14px 16px; border-radius:10px; background: rgba(91,95,239,0.08);
+  border-left:3px solid var(--indigo); font-size:0.86rem; color: var(--ink-soft); margin-top:6px;
+}
+.quiz-explain.show{ display:block; animation: fadeUp 0.4s ease; }
+@keyframes fadeUp{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+/* ===== Practice accordion ===== */
+.accordion-item{ border:1px solid var(--border-glass); border-radius:12px; margin-bottom:12px; overflow:hidden; background: rgba(255,255,255,0.015);}
+.accordion-head{
+  display:flex; justify-content:space-between; align-items:center; padding:16px 20px; cursor:pointer;
+  font-weight:600; color: var(--ink-bright); font-size:0.92rem;
+}
+.accordion-head i{ transition: transform 0.35s ease; color: var(--cyan); }
+.accordion-item.open .accordion-head i{ transform: rotate(180deg); }
+.accordion-body{ max-height:0; overflow:hidden; transition: max-height 0.4s ease; padding:0 20px; }
+.accordion-item.open .accordion-body{ padding-bottom:20px; }
+.accordion-body .q-label{ font-size:0.78rem; color: var(--violet); font-weight:700; letter-spacing:0.5px; margin-bottom:6px; }
+.accordion-body .q-text{ font-size:0.9rem; color: var(--ink-soft); margin-bottom:12px; }
+
+/* ===== Badges / pills ===== */
+.pill-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+.pill{
+  font-family: var(--font-mono); font-size:0.7rem; padding:5px 12px; border-radius:20px;
+  border:1px solid var(--border-glass); color: var(--ink-faint); letter-spacing:0.4px;
+}
+
+/* ===== Sidebar progress dock (desktop) ===== */
+.progress-dock{
+  position:fixed; right:22px; top:50%; transform:translateY(-50%); z-index:140;
+  display:flex; flex-direction:column; gap:10px;
+}
+.progress-dock .dot{
+  width:11px; height:11px; border-radius:50%; border:1px solid var(--border-glass);
+  background: rgba(255,255,255,0.05); cursor:pointer; transition: all 0.3s ease; position:relative;
+}
+.progress-dock .dot.active{ background: var(--indigo); border-color: var(--indigo); box-shadow:0 0 10px rgba(91,95,239,0.8); transform:scale(1.3); }
+.progress-dock .dot .tip{
+  position:absolute; right:24px; top:50%; transform:translateY(-50%);
+  background: var(--bg-panel-solid); border:1px solid var(--border-glass); padding:5px 10px; border-radius:6px;
+  font-size:0.7rem; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s ease; color:var(--ink-soft);
+}
+.progress-dock .dot:hover .tip{ opacity:1; }
+
+/* ===== MADE BY YASH RAJ badge ===== */
+.made-by-badge{
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: 1px solid rgba(0,217,255,0.35);
+  border-radius: 8px;
+  background: rgba(0,217,255,0.07);
+  white-space: nowrap;
+  margin-left: 12px;
+  box-shadow: 0 0 12px rgba(0,217,255,0.15);
+  animation: badge-pulse 3s ease-in-out infinite;
+  display: inline-block;
+  text-decoration: none;
+}
+@keyframes badge-pulse{
+  0%,100%{ box-shadow: 0 0 8px rgba(0,217,255,0.15); border-color: rgba(0,217,255,0.35); }
+  50%{ box-shadow: 0 0 22px rgba(0,217,255,0.45); border-color: rgba(0,217,255,0.70); }
+}
+
+/* ===== CUSTOM ANTIGRAVITY CURSOR ===== */
+*{ cursor: none !important; }
+#cursor-ring{
+  position:fixed; top:0; left:0; pointer-events:none; z-index:99999;
+  width:38px; height:38px; border-radius:50%;
+  border: 2px solid rgba(0,217,255,0.85);
+  transform: translate(-50%,-50%);
+  transition: width 0.22s ease, height 0.22s ease, border-color 0.22s ease, opacity 0.3s ease;
+  box-shadow: 0 0 14px rgba(0,217,255,0.45), inset 0 0 10px rgba(0,217,255,0.08);
+  mix-blend-mode: screen;
+}
+#cursor-dot{
+  position:fixed; top:0; left:0; pointer-events:none; z-index:100000;
+  width:7px; height:7px; border-radius:50%;
+  background: #00D9FF;
+  transform: translate(-50%,-50%);
+  box-shadow: 0 0 10px rgba(0,217,255,0.9), 0 0 22px rgba(91,95,239,0.5);
+  transition: transform 0.1s ease, background 0.2s ease;
+}
+#cursor-trail{
+  position:fixed; top:0; left:0; pointer-events:none; z-index:99998;
+  width:60px; height:60px; border-radius:50%;
+  background: radial-gradient(circle, rgba(91,95,239,0.18) 0%, transparent 70%);
+  transform: translate(-50%,-50%);
+  filter: blur(6px);
+}
+body.cursor-on-tile #cursor-ring{
+  width:56px; height:56px;
+  border-color: rgba(168,85,247,0.9);
+  box-shadow: 0 0 24px rgba(168,85,247,0.55), inset 0 0 16px rgba(168,85,247,0.12);
+}
+body.cursor-clicking #cursor-ring{
+  width:28px; height:28px;
+  border-color: rgba(0,217,255,1);
+  box-shadow: 0 0 32px rgba(0,217,255,0.8);
+}
+body.cursor-clicking #cursor-dot{
+  transform: translate(-50%,-50%) scale(2.2);
+  background: #A855F7;
+}
+
+/* ===== TILE CURSOR TILT EFFECT ===== */
+.glass{
+  background: var(--bg-panel);
+  border:1px solid var(--border-glass);
+  border-radius:16px;
+  backdrop-filter: blur(14px) saturate(120%);
+  box-shadow: var(--shadow-deep);
+  transform-style: preserve-3d;
+  transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+  transition: transform 0.55s cubic-bezier(0.23,1,0.32,1), box-shadow 0.55s ease;
+  will-change: transform;
+  position: relative;
+  overflow: hidden;
+}
+.glass::after{
+  content:'';
+  position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background: radial-gradient(circle at 50% 50%, rgba(91,95,239,0.0), transparent 60%);
+  transition: background 0.3s ease;
+  z-index:1;
+}
+.glass:hover::after{
+  background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(91,95,239,0.10), rgba(168,85,247,0.04) 45%, transparent 65%);
+}
+.glass > *{ position:relative; z-index:2; }
+
+/* ===== Animated gradient orbs (CSS layer, under WebGL) ===== */
+.orb{
+  position:fixed; border-radius:50%; filter:blur(90px); pointer-events:none;
+  z-index:-3; opacity:0; animation-fill-mode:both; animation-timing-function:ease-in-out; animation-iteration-count:infinite;
+}
+.orb-1{
+  width:700px; height:700px; left:-180px; top:-180px;
+  background: radial-gradient(circle, rgba(91,95,239,0.22) 0%, transparent 70%);
+  animation: orb-drift-1 18s infinite;
+}
+.orb-2{
+  width:600px; height:600px; right:-150px; top:20%;
+  background: radial-gradient(circle, rgba(168,85,247,0.20) 0%, transparent 70%);
+  animation: orb-drift-2 22s infinite;
+}
+.orb-3{
+  width:550px; height:550px; left:30%; bottom:-150px;
+  background: radial-gradient(circle, rgba(0,217,255,0.14) 0%, transparent 70%);
+  animation: orb-drift-3 26s infinite;
+}
+.orb-4{
+  width:480px; height:480px; right:20%; top:10%;
+  background: radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 70%);
+  animation: orb-drift-4 20s infinite;
+}
+@keyframes orb-drift-1{
+  0%,100%{ opacity:0.6; transform:translate(0,0) scale(1); }
+  33%{ opacity:0.9; transform:translate(120px,80px) scale(1.15); }
+  66%{ opacity:0.5; transform:translate(60px,-60px) scale(0.9); }
+}
+@keyframes orb-drift-2{
+  0%,100%{ opacity:0.5; transform:translate(0,0) scale(1); }
+  40%{ opacity:0.8; transform:translate(-100px,140px) scale(1.2); }
+  75%{ opacity:0.4; transform:translate(-40px,-80px) scale(0.85); }
+}
+@keyframes orb-drift-3{
+  0%,100%{ opacity:0.4; transform:translate(0,0) scale(1); }
+  30%{ opacity:0.7; transform:translate(-80px,-100px) scale(1.1); }
+  70%{ opacity:0.5; transform:translate(100px,-60px) scale(1.05); }
+}
+@keyframes orb-drift-4{
+  0%,100%{ opacity:0.35; transform:translate(0,0) scale(1); }
+  50%{ opacity:0.6; transform:translate(-120px,80px) scale(1.18); }
+}
+
+/* ===== Footer ===== */
+footer{ text-align:center; padding:50px 20px 60px; color: var(--ink-faint); font-size:0.82rem; position:relative; z-index:1; }
+footer .fline{ width:60px; height:1px; background: var(--border-glass); margin: 0 auto 20px; }
+
+/* ===== Blinking Neon Red Styles for the Footer Warning ===== */
+.neon-red-blink {
+  color: #ff3b30;
+  font-weight: 600;
+  text-shadow: 0 0 5px #ff3b30, 0 0 15px #ff3b30;
+  animation: neon-blink 1.5s infinite ease-in-out;
+}
+@keyframes neon-blink {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 5px #ff3b30, 0 0 15px #ff3b30, 0 0 22px #ff3b30;
+  }
+  50% {
+    opacity: 0.35;
+    text-shadow: 0 0 2px #ff3b30, 0 0 5px #ff3b30;
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 980px){
+  nav.module-nav{ display:none; }
+  #menuToggle{ display:flex; align-items:center; justify-content:center; }
+  nav.module-nav.mobile-open{
+    display:flex; flex-direction:column; position:fixed; top:64px; left:0; right:0;
+    background: rgba(8,14,20,0.97); padding:16px; gap:4px; max-height:75vh; overflow-y:auto;
+    border-bottom:1px solid var(--border-glass);
+  }
+  .grid-2, .grid-3{ grid-template-columns:1fr; }
+  .progress-dock{ display:none; }
+  .hero-wrap{ padding:120px 20px 60px; }
+}
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="rippleCanvas"></canvas>
+<canvas id="particleCanvas"></canvas>
+<div id="cursor-trail"></div>
+<div id="cursor-ring"></div>
+<div id="cursor-dot"></div>
+<div class="gradient-backdrop"></div>
+<div class="grain-overlay"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="orb orb-4"></div>
+<div id="topProgress"></div>
+
+<header class="site-header">
+  <div class="brand">
+    <div class="mark">λ</div>
+    <div>
+      ML Mastery
+      <span class="sub">IIT Patna · Applied ML</span>
+    </div>
+  </div>
+  <nav class="module-nav" id="moduleNav">
+    <button data-target="hero" class="active">Home</button>
+    <button data-target="m1">01 Imbalanced Data & Advanced Classification</button>
+    <button data-target="m2">02 Feature Engineering & Sklearn Pipelines</button>
+    <button data-target="m3">03 Git, Version Control & Code Quality for ML</button>
+    <button data-target="m4">04 Regularization — Ridge, Lasso & ElasticNet</button>
+    <button data-target="m5">05 Advanced Regression Techniques</button>
+    <button data-target="m6">06 Time Series Forecasting</button>
+    <button data-target="m7">07 Decision Trees — Deep Dive</button>
+    <button data-target="m8">08 Random Forests & Bagging Ensembles</button>
+    <button data-target="m9">09 Gradient Boosting — XGBoost, LightGBM & CatBoost</button>
+    <button data-target="qbank">Question-Bank</button>
+  </nav>
+  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+    <a href="https://akhisweety01-hub.github.io/BDAY/" class="made-by-badge">BY YASH RAJ</a>
+    <button id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+  </div>
+</header>
+
+<div class="progress-dock" id="progressDock">
+  <!-- dots injected by JS -->
+</div>
+
+<main>
+
+<section class="hero-wrap" id="hero">
+  <div class="eyebrow" style="justify-content:center;">MID MODULE EVALUATION · ARTIFICIAL INTELLIGENCE AND ADVANCED MACHINE LEARNING</div>
+  <h1 class="hero-title">Several Topics.<br>One rigorous <em>field guide</em><br>to AIML.</h1>
+  <p class="hero-sub">Scroll, flip the cards, and test yourself as you go.</p>
+  <div class="pill-row" style="justify-content:center; margin-top:34px;">
+    <span class="pill"><i class="fa-solid fa-square-root-variable"></i> LaTeX derivations</span>
+    <span class="pill"><i class="fa-solid fa-code"></i> Production level code</span>
+    <span class="pill"><i class="fa-solid fa-clone"></i> Flip-to-reveal cards</span>
+    <span class="pill"><i class="fa-solid fa-circle-question"></i> Auto-graded quizzes</span>
+  </div>
+</section>
+
+</main>
+<section class="section-wrap" id="m1">
+  <div class="eyebrow">Module 01</div>
+  <h2 class="module-title">Imbalanced Data & Advanced Classification</h2>
+  <p class="module-desc">When the minority class is the one that matters — fraud, churn, disease — accuracy lies to you. This module covers resampling theory, focal loss, and the metrics that actually reflect performance under skew.</p>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-scale-unbalanced"></i> Why Accuracy Fails</h3>
+    <p>With a 99:1 class ratio, a classifier that always predicts the majority class scores <strong>99% accuracy</strong> while catching zero true positives. The fix is to evaluate on metrics sensitive to the minority class, and to address the imbalance at the data or loss-function level.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-diagram-project"></i> SMOTE — Synthetic Minority Oversampling</h3>
+    <p>SMOTE generates synthetic minority samples by interpolating between a real point and one of its k-nearest minority neighbors, rather than simply duplicating rows (which causes overfitting).</p>
+    <div class="math-box">
+      $$x_{new} = x_i + \lambda \cdot (x_{zi} - x_i), \quad \lambda \sim U(0,1)$$
+      <p style="margin-top:8px; font-size:0.85rem;">where $x_i$ is a minority sample and $x_{zi}$ is one of its $k$ nearest minority-class neighbors.</p>
+    </div>
+    <p><strong>ADASYN</strong> (Adaptive Synthetic Sampling) extends this by generating <em>more</em> synthetic points for minority samples that are harder to learn — those with more majority-class neighbors — weighting density by:</p>
+    <div class="math-box">$$\Gamma_i = \frac{\Delta_i / k}{\sum_j \Delta_j/k}, \qquad \Delta_i = \text{majority-class neighbors of } x_i$$</div>
+    <div class="code-block">
+      <div class="code-head"><span>python · smote_pipeline.py</span><button onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="c-kw">from</span> imblearn.over_sampling <span class="c-kw">import</span> SMOTE, ADASYN
+<span class="c-kw">from</span> sklearn.model_selection <span class="c-kw">import</span> train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=<span class="c-num">0.2</span>, stratify=y, random_state=<span class="c-num">42</span>
+)
+
+<span class="c-com"># Resample ONLY the training fold — never touch the test set</span>
+smote = SMOTE(sampling_strategy=<span class="c-str">'auto'</span>, k_neighbors=<span class="c-num">5</span>, random_state=<span class="c-num">42</span>)
+X_res, y_res = smote.fit_resample(X_train, y_train)
+
+<span class="c-com"># ADASYN focuses synthetic points near the decision boundary</span>
+adasyn = ADASYN(sampling_strategy=<span class="c-str">'auto'</span>, n_neighbors=<span class="c-num">5</span>, random_state=<span class="c-num">42</span>)
+X_res2, y_res2 = adasyn.fit_resample(X_train, y_train)</pre>
+    </div>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-fire"></i> Focal Loss</h3>
+    <p>Focal Loss, from RetinaNet, down-weights easy, well-classified examples so the model spends gradient on hard, minority-class examples:</p>
+    <div class="math-box">$$FL(p_t) = -\alpha_t (1-p_t)^{\gamma} \log(p_t)$$</div>
+    <p>Here $p_t$ is the model's predicted probability for the true class, $\gamma \geq 0$ is the <strong>focusing parameter</strong> (typically 2), and $\alpha_t$ balances class frequency. When $p_t \to 1$ (an easy, correct example), $(1-p_t)^\gamma \to 0$ and the loss contribution vanishes; when $p_t$ is low (a hard example), the modulating term stays near 1 and the full cross-entropy penalty applies.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-chart-line"></i> Precision-Recall vs ROC-AUC</h3>
+    <div class="grid-2">
+      <div>
+        <p><strong>ROC-AUC</strong> plots TPR vs FPR across thresholds. It can look deceptively good under imbalance because FPR's denominator (true negatives) is huge.</p>
+        <div class="math-box" style="font-size:0.85rem;">$$TPR=\frac{TP}{TP+FN}, \quad FPR=\frac{FP}{FP+TN}$$</div>
+      </div>
+      <div>
+        <p><strong>PR-AUC</strong> plots Precision vs Recall, both of which depend only on the positive class — making it the preferred metric for rare-event detection.</p>
+        <div class="math-box" style="font-size:0.85rem;">$$Precision=\frac{TP}{TP+FP}, \quad Recall=\frac{TP}{TP+FN}$$</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diagram-box glass">
+    <svg viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2dd4bf"/></marker>
+      </defs>
+      <text x="20" y="28" fill="#eef5fb" font-size="14" font-weight="700" font-family="Inter">Imbalanced Pipeline Flow</text>
+      <g font-family="Inter" font-size="11.5">
+        <rect x="20" y="60" width="120" height="50" rx="10" fill="rgba(45,212,191,0.12)" stroke="#2dd4bf"/>
+        <text x="80" y="89" fill="#eef5fb" text-anchor="middle">Raw Data<tspan x="80" dy="14" font-size="9" fill="#aac0d2">99:1 ratio</tspan></text>
+
+        <line x1="140" y1="85" x2="185" y2="85" stroke="#2dd4bf" stroke-width="2" marker-end="url(#arrow1)"/>
+
+        <rect x="190" y="60" width="130" height="50" rx="10" fill="rgba(139,127,216,0.12)" stroke="#8b7fd8"/>
+        <text x="255" y="83" fill="#eef5fb" text-anchor="middle">Train/Test Split<tspan x="255" dy="14" font-size="9" fill="#aac0d2">stratified</tspan></text>
+
+        <line x1="320" y1="85" x2="365" y2="85" stroke="#8b7fd8" stroke-width="2" marker-end="url(#arrow1)"/>
+
+        <rect x="370" y="60" width="130" height="50" rx="10" fill="rgba(242,185,79,0.12)" stroke="#f2b94f"/>
+        <text x="435" y="83" fill="#eef5fb" text-anchor="middle">SMOTE / ADASYN<tspan x="435" dy="14" font-size="9" fill="#aac0d2">train fold only</tspan></text>
+
+        <line x1="500" y1="85" x2="545" y2="85" stroke="#f2b94f" stroke-width="2" marker-end="url(#arrow1)"/>
+
+        <rect x="550" y="60" width="130" height="50" rx="10" fill="rgba(239,123,107,0.12)" stroke="#ef7b6b"/>
+        <text x="615" y="83" fill="#eef5fb" text-anchor="middle">Model + Focal Loss<tspan x="615" dy="14" font-size="9" fill="#aac0d2">cost-sensitive</tspan></text>
+
+        <line x1="615" y1="110" x2="615" y2="150" stroke="#ef7b6b" stroke-width="2" marker-end="url(#arrow1)"/>
+        <rect x="500" y="155" width="180" height="50" rx="10" fill="rgba(45,212,191,0.12)" stroke="#2dd4bf"/>
+        <text x="590" y="178" fill="#eef5fb" text-anchor="middle">Evaluate: PR-AUC<tspan x="590" dy="14" font-size="9" fill="#aac0d2">not raw accuracy</tspan></text>
+      </g>
+    </svg>
+    <p class="diagram-caption">Resampling must happen strictly inside the training fold to avoid leaking synthetic information into the test set.</p>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Interview Q</div><h4>Why not oversample before train/test split?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>Synthetic points generated from the full dataset can land in the test fold, meaning the model gets evaluated on samples that share interpolated information with training data — an optimistic, leaky estimate of real-world performance.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Trade-off</div><h4>SMOTE vs class weights</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>Class weights are cheaper (no new rows, no distance computation) and work for any model with a loss function. SMOTE physically densifies the minority region, which helps distance-based and tree-split methods that don't use a weighted loss.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Definition</div><h4>What does $\gamma$ control in Focal Loss?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>$\gamma$ is the focusing parameter. Higher $\gamma$ more aggressively suppresses the loss contribution of easy examples, forcing training to concentrate on hard, often minority-class, examples. $\gamma=0$ reduces Focal Loss to plain cross-entropy.</p></div>
+    </div></div>
+  </div>
+
+  <div class="quiz-box glass" data-quiz>
+    <h3><i class="fa-solid fa-circle-question"></i> Micro-Quiz</h3>
+    <p class="quiz-q">A fraud model has 99.4% accuracy but 0.12 recall on the fraud class. What's the most likely explanation?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" data-correct="false">The model has overfit to noise in the features.</button>
+      <button class="quiz-opt" data-correct="true">Severe class imbalance is letting majority-class accuracy mask poor minority detection.</button>
+      <button class="quiz-opt" data-correct="false">The learning rate is too high.</button>
+      <button class="quiz-opt" data-correct="false">The test set is too small to be meaningful.</button>
+    </div>
+    <div class="quiz-explain">High accuracy with low recall on the minority class is the textbook signature of class imbalance — the model can satisfy accuracy almost entirely by getting the majority class right, while contributing little to detecting the rare positive class. Address with resampling, focal loss, or cost-sensitive learning, and re-evaluate on PR-AUC/recall.</div>
+  </div>
+</section>
+<section class="section-wrap" id="m2">
+  <div class="eyebrow">Module 02</div>
+  <h2 class="module-title">Feature Engineering & Sklearn Pipelines</h2>
+  <p class="module-desc">The single biggest source of inflated offline metrics is data leakage. Pipelines aren't just convenience — they're a leakage firewall between your training fold and everything downstream.</p>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-bug-slash"></i> Data Leakage — The Cardinal Sin</h3>
+    <p>Leakage occurs when information from outside the training set (often, statistics of the test set) influences model training. The classic mistake: fitting a <code>StandardScaler</code> or <code>TargetEncoder</code> on the <em>full</em> dataset before splitting. Even though no labels are technically passed to the test set, its mean/variance leaked into the scaler — the model sees a feature distribution that "knows about" data it hasn't met.</p>
+    <p><strong>Rule:</strong> every transformer that learns statistics from data (mean, std, target-conditional means, vocabulary) must be <code>.fit()</code> only on the training fold, ideally enforced inside a <code>Pipeline</code> so cross-validation refits it correctly for every fold.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-table-columns"></i> ColumnTransformer + Custom Transformers</h3>
+    <p>Real datasets mix numeric, categorical, and text columns that need different treatment. <code>ColumnTransformer</code> applies a different transformer to each named subset of columns, in parallel, and concatenates the outputs.</p>
+    <div class="code-block">
+      <div class="code-head"><span>python · feature_pipeline.py</span><button onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="c-kw">from</span> sklearn.compose <span class="c-kw">import</span> ColumnTransformer
+<span class="c-kw">from</span> sklearn.pipeline <span class="c-kw">import</span> Pipeline
+<span class="c-kw">from</span> sklearn.preprocessing <span class="c-kw">import</span> StandardScaler, OneHotEncoder
+<span class="c-kw">from</span> sklearn.impute <span class="c-kw">import</span> SimpleImputer
+<span class="c-kw">from</span> sklearn.base <span class="c-kw">import</span> BaseEstimator, TransformerMixin
+
+<span class="c-kw">class</span> <span class="c-fn">OutlierCapper</span>(BaseEstimator, TransformerMixin):
+    <span class="c-com">"""Custom transformer: caps values beyond 1.5*IQR."""</span>
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, factor=<span class="c-num">1.5</span>):
+        self.factor = factor
+
+    <span class="c-kw">def</span> <span class="c-fn">fit</span>(self, X, y=<span class="c-kw">None</span>):
+        q1, q3 = np.percentile(X, [<span class="c-num">25</span>, <span class="c-num">75</span>], axis=<span class="c-num">0</span>)
+        iqr = q3 - q1
+        self.lower_ = q1 - self.factor * iqr
+        self.upper_ = q3 + self.factor * iqr
+        <span class="c-kw">return</span> self
+
+    <span class="c-kw">def</span> <span class="c-fn">transform</span>(self, X):
+        <span class="c-kw">return</span> np.clip(X, self.lower_, self.upper_)
+
+numeric_cols = [<span class="c-str">'income'</span>, <span class="c-str">'age'</span>, <span class="c-str">'balance'</span>]
+categorical_cols = [<span class="c-str">'job'</span>, <span class="c-str">'marital'</span>]
+
+numeric_pipe = Pipeline([
+    (<span class="c-str">'impute'</span>, SimpleImputer(strategy=<span class="c-str">'median'</span>)),
+    (<span class="c-str">'cap'</span>, OutlierCapper()),
+    (<span class="c-str">'scale'</span>, StandardScaler()),
+])
+
+preprocessor = ColumnTransformer([
+    (<span class="c-str">'num'</span>, numeric_pipe, numeric_cols),
+    (<span class="c-str">'cat'</span>, OneHotEncoder(handle_unknown=<span class="c-str">'ignore'</span>), categorical_cols),
+])
+
+full_pipeline = Pipeline([
+    (<span class="c-str">'prep'</span>, preprocessor),
+    (<span class="c-str">'model'</span>, RandomForestClassifier(random_state=<span class="c-num">42</span>)),
+])</pre>
+    </div>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-layer-group"></i> Target Encoding — Math & The Leakage Trap</h3>
+    <p>Target encoding replaces a categorical level with the mean of the target for that level, smoothed toward the global mean to avoid overfitting rare categories:</p>
+    <div class="math-box">$$\hat{x}_c = \frac{n_c \cdot \bar{y}_c + m \cdot \bar{y}_{global}}{n_c + m}$$</div>
+    <p>where $n_c$ is the count of category $c$, $\bar{y}_c$ its mean target, $\bar{y}_{global}$ the overall mean, and $m$ a smoothing strength. <strong>Danger:</strong> computing $\bar{y}_c$ using a row's own label leaks that row's target into its own feature — always use out-of-fold target statistics (e.g. <code>category_encoders.TargetEncoder</code> with cross-validation internals, or a manual K-fold scheme).</p>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Trade-off</div><h4>Pipeline vs. manual preprocessing</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>Manual preprocessing (fit scaler once, transform everywhere) silently leaks fold statistics during cross-validation. A <code>Pipeline</code> re-fits every transformer per fold, ensuring the CV score reflects true generalization.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Interview Q</div><h4>Why <code>handle_unknown='ignore'</code> in OHE?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>Production data can contain a category never seen in training (a new city, a new job title). Without <code>handle_unknown='ignore'</code>, the encoder raises an error and the pipeline crashes; with it, the unseen category is encoded as all-zeros instead.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Definition</div><h4>What is $m$ in target encoding smoothing?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>$m$ is a pseudo-count that controls how strongly a rare category is pulled toward the global mean rather than trusting its own (noisy, low-sample) mean. Larger $m$ = more smoothing, less overfitting to rare levels.</p></div>
+    </div></div>
+  </div>
+
+  <div class="quiz-box glass" data-quiz>
+    <h3><i class="fa-solid fa-circle-question"></i> Evacuation 2 Summary</h3>
+    <p class="quiz-q">You fit a <code>StandardScaler</code> on the entire dataset, then split into train/test. What's wrong?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" data-correct="false">Nothing — scaling is label-independent so it's always safe.</button>
+      <button class="quiz-opt" data-correct="true">The test set's mean/variance influenced the scaler, leaking distributional information into training.</button>
+      <button class="quiz-opt" data-correct="false">StandardScaler should never be used with tree models.</button>
+      <button class="quiz-opt" data-correct="false">The split should always come before any imports.</button>
+    </div>
+    <div class="quiz-explain">Even unsupervised transforms can leak — the scaler's learned mean and std are now contaminated by test-set values, giving an overly optimistic view of how the pipeline generalizes. Always split first, then <code>fit_transform</code> only on the training fold (a <code>Pipeline</code> + cross-validation enforces this automatically).</div>
+  </div>
+</section>
+<section class="section-wrap" id="m3">
+  <div class="eyebrow">Module 03</div>
+  <h2 class="module-title">Git, Version Control & Code Quality for ML</h2>
+  <p class="module-desc">Models are code plus data plus randomness. Reproducibility demands disciplined version control for all three, and clean, linted code so a teammate (or future-you) can trust the pipeline.</p>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-code-branch"></i> Branching Strategy for ML Experiments</h3>
+    <p>A common pattern: <code>main</code> holds production-ready models, <code>develop</code> integrates tested features, and short-lived <code>experiment/*</code> branches isolate each hyperparameter sweep or architecture change — preventing half-finished experiments from polluting the trunk.</p>
+    <div class="code-block">
+      <div class="code-head"><span>bash · git workflow</span><button onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="c-com"># Initialize tracking for a new ML project</span>
+git init
+git add .
+git commit -m <span class="c-str">"Initial commit: project scaffold"</span>
+
+<span class="c-com"># Isolate a new experiment</span>
+git checkout -b experiment-xgboost
+
+<span class="c-com"># After validating results, merge back</span>
+git checkout develop
+git merge experiment-xgboost
+git branch -d experiment-xgboost</pre>
+    </div>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-database"></i> DVC — Versioning What Git Can't</h3>
+    <p>Git is built for text diffs, not multi-gigabyte datasets or binary model checkpoints. <strong>DVC (Data Version Control)</strong> stores a lightweight pointer (a hash) in Git while the actual data/model file lives in remote storage (S3, GCS, or a local cache) — so <code>git log</code> shows exactly which dataset version produced which model.</p>
+    <div class="code-block">
+      <div class="code-head"><span>bash · dvc basics</span><button onclick="copyCode(this)">Copy</button></div>
+      <pre>dvc init
+dvc add data/train.csv         <span class="c-com"># creates train.csv.dvc pointer</span>
+git add data/train.csv.dvc .gitignore
+git commit -m <span class="c-str">"Track training data v1 with DVC"</span>
+dvc remote add -d storage s3://my-bucket/dvcstore
+dvc push</pre>
+    </div>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-broom"></i> Code Quality: PEP 8, Black, Pre-commit</h3>
+    <p><strong>PEP 8</strong> is Python's style guide (naming, spacing, line length). <strong>Black</strong> is an opinionated auto-formatter that enforces a single style with zero configuration debate. <strong>Pre-commit hooks</strong> run linters/formatters automatically before every commit, so unformatted or broken code never reaches the repo.</p>
+    <div class="code-block">
+      <div class="code-head"><span>yaml · .pre-commit-config.yaml</span><button onclick="copyCode(this)">Copy</button></div>
+      <pre>repos:
+  - repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+      - id: black
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8</pre>
+    </div>
+    <p style="margin-top:10px;">Install with <code>pre-commit install</code> once — every subsequent <code>git commit</code> auto-runs Black and Flake8, blocking the commit if issues remain unresolved.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-dice"></i> Reproducibility: Fixing Randomness</h3>
+    <p>Without a fixed seed, NumPy's RNG, Python's <code>random</code>, and most ML libraries draw different random numbers on every run — making "I got 91% accuracy" unfalsifiable. Seeding every RNG source is the minimum bar for a reproducible experiment.</p>
+    <div class="code-block">
+      <div class="code-head"><span>python · seed_everything.py</span><button onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="c-kw">import</span> random
+<span class="c-kw">import</span> numpy <span class="c-kw">as</span> np
+
+<span class="c-kw">def</span> <span class="c-fn">seed_everything</span>(seed: <span class="c-kw">int</span> = <span class="c-num">42</span>):
+    random.seed(seed)
+    np.random.seed(seed)
+
+seed_everything(<span class="c-num">42</span>)</pre>
+    </div>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Trade-off</div><h4>Git LFS vs DVC</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>Git LFS stores large files but is tied to your Git remote's storage/bandwidth quota. DVC decouples data storage from Git entirely — point it at any remote (S3, GCS, SSH) — and adds first-class ML pipeline/experiment tracking on top.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Interview Q</div><h4>Why seed both NumPy and Python's <code>random</code>?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>They maintain independent RNG states. A library might use either internally (e.g. sklearn often uses NumPy, while some shuffling utilities use Python's <code>random</code>) — seeding only one leaves the other source of nondeterminism unfixed.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Definition</div><h4>What does a pre-commit hook actually do?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>A script Git runs automatically right before finalizing a commit. If the hook (e.g. Black or Flake8) exits with a failure code, the commit is aborted — enforcing style/quality gates without relying on developer discipline alone.</p></div>
+    </div></div>
+  </div>
+
+  <div class="quiz-box glass" data-quiz>
+    <h3><i class="fa-solid fa-circle-question"></i> Micro-Quiz</h3>
+    <p class="quiz-q">Your teammate's notebook gets 94% accuracy, yours gets 89% on "identical" code and data. What's the most likely root cause?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" data-correct="false">Their CPU is simply faster.</button>
+      <button class="quiz-opt" data-correct="true">An unfixed random seed somewhere in the split, init, or sampling step.</button>
+      <button class="quiz-opt" data-correct="false">Jupyter notebooks are inherently non-deterministic.</button>
+      <button class="quiz-opt" data-correct="false">Different monitor resolutions affect floating point precision.</button>
+    </div>
+    <div class="quiz-explain">Unseeded randomness in train/test splitting, model weight initialization, or bootstrap sampling produces different results on every run — even with identical code and data. <code>seed_everything()</code>-style functions, applied before any random operation, are the standard fix.</div>
+  </div>
+</section>
+<section class="section-wrap" id="m4">
+  <div class="eyebrow">Module 04</div>
+  <h2 class="module-title">Regularization — Ridge, Lasso & ElasticNet</h2>
+  <p class="module-desc">Regularization trades a little training-set fit for a lot of generalization, by penalizing coefficient magnitude. The choice of penalty shapes which coefficients survive.</p>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-square-root-variable"></i> Ridge Regression (L2)</h3>
+    <p>Ridge adds the squared $\ell_2$ norm of coefficients to the ordinary least squares loss:</p>
+    <div class="math-box">$$\hat{\beta}_{ridge} = \arg\min_\beta \left\| y - X\beta \right\|_2^2 + \lambda \sum_{j=1}^p \beta_j^2$$</div>
+    <p>This has a closed-form solution: $\hat{\beta} = (X^TX + \lambda I)^{-1}X^Ty$. Adding $\lambda I$ makes $X^TX$ invertible even when features are collinear, which is exactly why Ridge is the standard fix for multicollinearity. Coefficients shrink toward zero but rarely hit it exactly.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-scissors"></i> Lasso Regression (L1) — Sparsity</h3>
+    <div class="math-box">$$\hat{\beta}_{lasso} = \arg\min_\beta \left\| y - X\beta \right\|_2^2 + \lambda \sum_{j=1}^p |\beta_j|$$</div>
+    <p>Unlike L2, the L1 penalty has a non-differentiable kink at zero. Geometrically, the L1 constraint region is a diamond (in 2D) with corners on the axes; the elliptical OLS loss contours are likely to first touch this region exactly at a corner, where one coefficient is precisely zero. This is why Lasso performs automatic <strong>feature selection</strong> while Ridge does not.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-shapes"></i> Geometric Intuition</h3>
+    <div class="diagram-box">
+      <svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+        <text x="20" y="24" fill="#eef5fb" font-size="13" font-weight="700" font-family="Inter">L1 (diamond) vs L2 (circle) constraint regions</text>
+        <g transform="translate(140,135)">
+          <line x1="-90" y1="0" x2="90" y2="0" stroke="#3a4f60" stroke-width="1"/>
+          <line x1="0" y1="-90" x2="0" y2="90" stroke="#3a4f60" stroke-width="1"/>
+          <polygon points="0,-70 70,0 0,70 -70,0" fill="rgba(242,185,79,0.15)" stroke="#f2b94f" stroke-width="2"/>
+          <ellipse cx="25" cy="-15" rx="95" ry="55" fill="none" stroke="#2dd4bf" stroke-width="1.6" transform="rotate(25 25 -15)"/>
+          <circle cx="70" cy="0" r="4" fill="#ef7b6b"/>
+          <text x="78" y="3" fill="#ef7b6b" font-size="10" font-family="Inter">optimum (sparse: β₂=0)</text>
+          <text x="-30" y="115" fill="#aac0d2" font-size="11" font-family="Inter">Lasso — corner touch → sparsity</text>
+        </g>
+        <g transform="translate(440,135)">
+          <line x1="-90" y1="0" x2="90" y2="0" stroke="#3a4f60" stroke-width="1"/>
+          <line x1="0" y1="-90" x2="0" y2="90" stroke="#3a4f60" stroke-width="1"/>
+          <circle cx="0" cy="0" r="70" fill="rgba(45,212,191,0.10)" stroke="#2dd4bf" stroke-width="2"/>
+          <ellipse cx="25" cy="-15" rx="95" ry="55" fill="none" stroke="#2dd4bf" stroke-width="1.6" transform="rotate(25 25 -15)"/>
+          <circle cx="48" cy="-50" r="4" fill="#ef7b6b"/>
+          <text x="-40" y="115" fill="#aac0d2" font-size="11" font-family="Inter">Ridge — smooth touch → shrinkage only</text>
+        </g>
+      </svg>
+      <p class="diagram-caption">The diamond's sharp corners make zero-coefficient solutions geometrically likely; the circle has no corners, so coefficients shrink but stay non-zero.</p>
+    </div>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-arrows-to-circle"></i> ElasticNet — Best of Both</h3>
+    <div class="math-box">$$\hat{\beta}_{en} = \arg\min_\beta \left\| y - X\beta \right\|_2^2 + \lambda \left[ \alpha \sum_j |\beta_j| + (1-\alpha)\sum_j \beta_j^2 \right]$$</div>
+    <p>$\alpha \in [0,1]$ mixes the two penalties: $\alpha=1$ is pure Lasso, $\alpha=0$ is pure Ridge. ElasticNet is especially useful when features are correlated in groups — Lasso alone tends to arbitrarily pick one feature from a correlated group and zero out the rest, while ElasticNet's L2 component encourages correlated features to be selected (or shrunk) together.</p>
+    <p>Both Lasso and ElasticNet are typically solved via <strong>coordinate descent</strong>: cycle through coefficients one at a time, holding all others fixed, and minimize the (now 1-D, soft-thresholding) sub-problem in closed form — repeating until convergence.</p>
+    <div class="code-block">
+      <div class="code-head"><span>python · regularized_regression.py</span><button onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="c-kw">from</span> sklearn.linear_model <span class="c-kw">import</span> Ridge, Lasso, ElasticNet
+<span class="c-kw">from</span> sklearn.model_selection <span class="c-kw">import</span> GridSearchCV
+
+<span class="c-com"># Ridge: use when multicollinearity is detected (high VIF)</span>
+ridge = Ridge(alpha=<span class="c-num">1.0</span>, random_state=<span class="c-num">42</span>)
+ridge.fit(X_train_scaled, y_train)
+
+<span class="c-com"># ElasticNet hyperparameter sweep over both lambda and the L1 ratio</span>
+param_grid = {<span class="c-str">'alpha'</span>: [<span class="c-num">0.01</span>, <span class="c-num">0.1</span>, <span class="c-num">1</span>, <span class="c-num">10</span>], <span class="c-str">'l1_ratio'</span>: [<span class="c-num">0.1</span>, <span class="c-num">0.5</span>, <span class="c-num">0.9</span>]}
+grid = GridSearchCV(ElasticNet(random_state=<span class="c-num">42</span>), param_grid, cv=<span class="c-num">5</span>,
+                     scoring=<span class="c-str">'neg_mean_squared_error'</span>)
+grid.fit(X_train_scaled, y_train)</pre>
+    </div>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Interview Q</div><h4>Why does Lasso zero out coefficients but Ridge doesn't?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>Geometrically, the L1 ball has corners on the axes where one coefficient is exactly zero; the loss contours are likely to intersect there first. The L2 ball is smooth with no corners, so the intersection point generically has all coefficients non-zero, just shrunk.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Trade-off</div><h4>When would you pick ElasticNet over pure Lasso?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>When predictors are highly correlated in groups. Pure Lasso arbitrarily keeps one and drops the rest; ElasticNet's L2 term encourages correlated features to share the shrinkage, giving more stable, interpretable coefficient selection.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Definition</div><h4>What problem does VIF detect?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>Variance Inflation Factor quantifies multicollinearity — how much a predictor's variance is inflated because it's linearly predictable from other predictors. VIF > 5–10 typically signals problematic collinearity, motivating Ridge/ElasticNet over plain OLS.</p></div>
+    </div></div>
+  </div>
+
+  <div class="quiz-box glass" data-quiz>
+    <h3><i class="fa-solid fa-circle-question"></i> Micro-Quiz</h3>
+    <p class="quiz-q">You have 500 features, most irrelevant, and you suspect only ~10 actually matter. Which regularizer is the most natural starting point?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" data-correct="false">Ridge, because it always outperforms Lasso.</button>
+      <button class="quiz-opt" data-correct="true">Lasso, because its sparsity-inducing penalty can zero out irrelevant features automatically.</button>
+      <button class="quiz-opt" data-correct="false">Neither — regularization doesn't help with feature counts.</button>
+      <button class="quiz-opt" data-correct="false">ElasticNet with α=0, since that's the strongest sparsity setting.</button>
+    </div>
+    <div class="quiz-explain">Lasso's L1 penalty drives many coefficients to exactly zero, performing implicit feature selection — ideal when you believe the true model is sparse. (Note: α=0 in ElasticNet is actually pure Ridge, the opposite of sparse — α=1 is pure Lasso.)</div>
+  </div>
+</section>
+<section class="section-wrap" id="m5">
+  <div class="eyebrow">Module 05</div>
+  <h2 class="module-title">Advanced Regression Techniques</h2>
+  <p class="module-desc">OLS assumes Gaussian, homoscedastic errors — an assumption the real world rarely respects. This module covers robust losses and GLMs for when outliers, skew, or count data break that assumption.</p>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-shield-halved"></i> Huber Loss — Robust to Outliers</h3>
+    <p>Squared-error loss penalizes large residuals quadratically, so a handful of outliers can dominate the fit. Huber loss behaves quadratically near zero but linearly for large residuals:</p>
+    <div class="math-box">
+      $$L_\delta(r) = \begin{cases} \frac{1}{2}r^2 & |r| \leq \delta \\ \delta\left(|r| - \frac{1}{2}\delta\right) & |r| > \delta \end{cases}$$
+    </div>
+    <p>$\delta$ controls the transition point. Small residuals (inliers) get the smooth, statistically efficient $\ell_2$ treatment; large residuals (outliers) only contribute linearly, capping their influence on the gradient.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-chart-area"></i> Quantile Regression</h3>
+    <p>Rather than estimating the conditional mean, quantile regression estimates a conditional quantile $\tau \in (0,1)$ (e.g. the median, $\tau=0.5$, or the 90th percentile) by minimizing the <strong>pinball loss</strong>:</p>
+    <div class="math-box">
+      $$L_\tau(r) = \begin{cases} \tau \cdot r & r \geq 0 \\ (\tau - 1)\cdot r & r < 0 \end{cases}$$
+    </div>
+    <p>This asymmetric penalty is invaluable for forecasting <em>ranges</em> — e.g. predicting the 10th and 90th percentile of delivery time gives a usable prediction interval, which a single mean estimate cannot.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-chart-simple"></i> GLMs: Poisson & Gamma Regression</h3>
+    <p>OLS assumes targets can be negative and normally distributed — wrong for <strong>count data</strong> (always non-negative integers) or strictly positive, right-skewed data (e.g. insurance claim amounts). Generalized Linear Models fix this with a <em>link function</em> $g$ connecting the linear predictor to the mean:</p>
+    <div class="math-box">$$g(\mathbb{E}[y\,|\,X]) = X\beta$$</div>
+    <p><strong>Poisson regression</strong> (link: $\log$) models count outcomes: $\mathbb{E}[y] = e^{X\beta}$, ensuring predictions stay positive. <strong>Gamma regression</strong> models strictly positive, right-skewed continuous targets (claim severity, wait times) and naturally handles the heteroscedasticity where variance grows with the mean.</p>
+    <div class="code-block">
+      <div class="code-head"><span>python · robust_glm.py</span><button onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="c-kw">from</span> sklearn.linear_model <span class="c-kw">import</span> HuberRegressor, QuantileRegressor
+<span class="c-kw">from</span> sklearn.linear_model <span class="c-kw">import</span> PoissonRegressor, GammaRegressor
+
+<span class="c-com"># Robust to outliers in residuals</span>
+huber = HuberRegressor(epsilon=<span class="c-num">1.35</span>)
+huber.fit(X_train, y_train)
+
+<span class="c-com"># Predict the 90th percentile of the target</span>
+q90 = QuantileRegressor(quantile=<span class="c-num">0.9</span>, alpha=<span class="c-num">0.01</span>, solver=<span class="c-str">'highs'</span>)
+q90.fit(X_train, y_train)
+
+<span class="c-com"># Count data (e.g. number of claims)</span>
+poisson_model = PoissonRegressor(alpha=<span class="c-num">1e-3</span>)
+poisson_model.fit(X_train, y_counts)</pre>
+    </div>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Interview Q</div><h4>Why is Huber loss "best of both worlds"?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>It's quadratic (like MSE) near zero, giving smooth, efficient gradients for typical points, but linear (like MAE) for large residuals, capping the influence any single outlier can exert on the fit.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Trade-off</div><h4>Mean prediction vs quantile regression</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>A mean prediction gives one number with no sense of spread. Fitting multiple quantile regressors (e.g. τ=0.1, 0.5, 0.9) yields a full predictive interval — essential for risk-aware decisions like staffing or inventory.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Definition</div><h4>What is a "link function" in a GLM?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>The function $g$ connecting the linear predictor $X\beta$ to the mean of the response distribution, $g(\mathbb{E}[y]) = X\beta$. It lets the model respect constraints (e.g. log-link keeps Poisson predictions strictly positive) that plain linear regression can't.</p></div>
+    </div></div>
+  </div>
+
+  <div class="quiz-box glass" data-quiz>
+    <h3><i class="fa-solid fa-circle-question"></i> Micro-Quiz</h3>
+    <p class="quiz-q">You're modeling the number of customer support tickets per day (always a non-negative integer). Which model is most appropriate?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" data-correct="false">Ordinary least squares regression.</button>
+      <button class="quiz-opt" data-correct="true">Poisson regression, since it's built for non-negative count data.</button>
+      <button class="quiz-opt" data-correct="false">Quantile regression at τ=0.5 only.</button>
+      <button class="quiz-opt" data-correct="false">Gamma regression, since it handles integers best.</button>
+    </div>
+    <div class="quiz-explain">Poisson regression's log-link constrains predictions to be positive and its underlying distribution naturally fits non-negative count data, unlike OLS which can predict negative ticket counts. Gamma regression is for continuous, strictly-positive, right-skewed data, not counts.</div>
+  </div>
+</section>
+<section class="section-wrap" id="m6">
+  <div class="eyebrow">Module 06</div>
+  <h2 class="module-title">Time Series Forecasting</h2>
+  <p class="module-desc">Time series breaks the i.i.d. assumption underlying most ML — order matters, and the past literally causes the future. Stationarity is the gatekeeping concept for classical forecasting models.</p>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-wave-square"></i> Stationarity & The ADF Test</h3>
+    <p>A series is (weakly) <strong>stationary</strong> if its mean, variance, and autocovariance don't change over time. Most classical models (ARIMA) require stationarity to produce stable, interpretable parameter estimates.</p>
+    <p>The <strong>Augmented Dickey-Fuller (ADF) test</strong> checks for a unit root — the formal signature of non-stationarity. It tests the regression:</p>
+    <div class="math-box">$$\Delta y_t = \alpha + \beta t + \gamma y_{t-1} + \sum_{i=1}^p \delta_i \Delta y_{t-i} + \varepsilon_t$$</div>
+    <p>Null hypothesis $H_0: \gamma = 0$ (a unit root exists → non-stationary). A small p-value ($<0.05$) rejects $H_0$, supporting stationarity. If the series is non-stationary, <strong>differencing</strong> ($y_t - y_{t-1}$) usually fixes it.</p>
+    <div class="code-block">
+      <div class="code-head"><span>python · stationarity_check.py</span><button onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="c-kw">from</span> statsmodels.tsa.stattools <span class="c-kw">import</span> adfuller
+
+result = adfuller(series.dropna())
+<span class="c-fn">print</span>(<span class="c-str">f"ADF Statistic: {result[0]:.4f}"</span>)
+<span class="c-fn">print</span>(<span class="c-str">f"p-value: {result[1]:.4f}"</span>)
+
+<span class="c-com"># Make non-stationary series stationary via differencing</span>
+series_diff = series.diff().dropna()</pre>
+    </div>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-square-root-variable"></i> ARIMA / SARIMAX — The Math</h3>
+    <p>ARIMA($p,d,q$) combines three components: <strong>AR($p$)</strong> — regression on the series' own past values; <strong>I($d$)</strong> — differencing $d$ times to induce stationarity; <strong>MA($q$)</strong> — regression on past forecast errors:</p>
+    <div class="math-box">
+      $$\underbrace{\left(1 - \sum_{i=1}^p \phi_i L^i\right)}_{AR} (1-L)^d y_t = \underbrace{\left(1 + \sum_{j=1}^q \theta_j L^j\right)}_{MA} \varepsilon_t$$
+    </div>
+    <p>where $L$ is the lag operator ($Ly_t = y_{t-1}$). <strong>SARIMAX</strong> extends this with seasonal AR/MA terms at a fixed period $s$ (e.g. 12 for monthly data with yearly seasonality) and optional exogenous regressors $X$.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-chart-line"></i> Exponential Smoothing & Rolling Features</h3>
+    <p>Simple exponential smoothing weights recent observations more heavily, with weight decaying geometrically:</p>
+    <div class="math-box">$$\hat{y}_{t+1} = \alpha y_t + (1-\alpha)\hat{y}_t, \quad \alpha \in (0,1)$$</div>
+    <p>Holt-Winters extends this with trend and seasonal components. For tree-based forecasters (XGBoost on tabular time data), <strong>rolling window features</strong> manually encode temporal structure: rolling mean, rolling std, lag-1, lag-7, etc., feeding the recent past as ordinary tabular features.</p>
+    <div class="code-block">
+      <div class="code-head"><span>python · rolling_features.py</span><button onclick="copyCode(this)">Copy</button></div>
+      <pre>df[<span class="c-str">'lag_1'</span>] = df[<span class="c-str">'sales'</span>].shift(<span class="c-num">1</span>)
+df[<span class="c-str">'lag_7'</span>] = df[<span class="c-str">'sales'</span>].shift(<span class="c-num">7</span>)
+df[<span class="c-str">'rolling_mean_7'</span>] = df[<span class="c-str">'sales'</span>].shift(<span class="c-num">1</span>).rolling(window=<span class="c-num">7</span>).mean()
+df[<span class="c-str">'rolling_std_7'</span>] = df[<span class="c-str">'sales'</span>].shift(<span class="c-num">1</span>).rolling(window=<span class="c-num">7</span>).std()
+<span class="c-com"># .shift(1) before rolling prevents leaking the current day's value</span></pre>
+    </div>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Interview Q</div><h4>Why can't you randomly shuffle-split time series data?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>It would let the model train on future data to predict the past, a severe form of leakage. Time series validation must respect temporal order — using expanding or rolling-origin splits where training data always precedes the validation window.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Definition</div><h4>What does the "I" in ARIMA stand for?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>"Integrated" — the number of differencing operations ($d$) needed to transform a non-stationary series into a stationary one before fitting the AR/MA components.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Trade-off</div><h4>ARIMA vs gradient-boosted trees for forecasting</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>ARIMA is statistically principled with interpretable parameters and works well on clean, single series with limited data. Tree-based models scale better to many series with rich exogenous features, but need manual lag/rolling feature engineering and offer less theoretical guarantee of unbiasedness.</p></div>
+    </div></div>
+  </div>
+
+  <div class="quiz-box glass" data-quiz>
+    <h3><i class="fa-solid fa-circle-question"></i> Micro-Quiz</h3>
+    <p class="quiz-q">An ADF test on your sales series returns a p-value of 0.62. What should you do before fitting ARIMA?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" data-correct="false">Proceed directly — high p-values mean strong stationarity.</button>
+      <button class="quiz-opt" data-correct="true">Difference the series, since a high p-value fails to reject the unit-root (non-stationary) null hypothesis.</button>
+      <button class="quiz-opt" data-correct="false">Switch immediately to a neural network, since ARIMA only works on stationary series ever.</button>
+      <button class="quiz-opt" data-correct="false">Increase the seasonal period parameter.</button>
+    </div>
+    <div class="quiz-explain">p=0.62 is far above the typical 0.05 threshold, so you fail to reject $H_0$ (unit root present → non-stationary). Differencing the series (and re-running ADF) is the standard next step before fitting the AR/MA components.</</div>
+  </div>
+</section>
+<section class="section-wrap" id="m7">
+  <div class="eyebrow">Module 07</div>
+  <h2 class="module-title">Decision Trees — Deep Dive</h2>
+  <p class="module-desc">Every split a decision tree makes is the answer to one question: which feature and threshold most reduces impurity? Understanding the impurity math explains both the model's power and its tendency to overfit.</p>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-code-fork"></i> Splitting Criteria — The Math</h3>
+    <p>For classification, two impurity measures dominate. <strong>Gini impurity</strong> measures the probability that two randomly drawn samples from a node have different classes:</p>
+    <div class="math-box">$$Gini(t) = 1 - \sum_{k=1}^{K} p_k^2$$</div>
+    <p><strong>Entropy</strong> measures information-theoretic disorder:</p>
+    <div class="math-box">$$Entropy(t) = -\sum_{k=1}^K p_k \log_2(p_k)$$</div>
+    <p>A split is chosen to maximize <strong>information gain</strong> — the impurity reduction from parent to weighted children:</p>
+    <div class="math-box">$$IG = I(parent) - \left(\frac{n_{left}}{n}I(left) + \frac{n_{right}}{n}I(right)\right)$$</div>
+    <p>For regression trees, splits minimize <strong>MSE</strong> (squared error from the node's mean prediction) or <strong>MAE</strong> (absolute error from the node's median prediction) within each resulting child node.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-scale-balanced"></i> Bias-Variance & Pruning</h3>
+    <p>An unconstrained tree grown to full depth has near-zero bias but very high variance — it memorizes training noise. <strong>Pruning</strong> trades a bit of training fit for generalization.</p>
+    <p><strong>Cost Complexity Pruning (CCP)</strong> grows the full tree, then removes subtrees that don't justify their complexity, guided by a regularized cost:</p>
+    <div class="math-box">$$R_\alpha(T) = R(T) + \alpha |T|$$</div>
+    <p>where $R(T)$ is the tree's training error, $|T|_i$ is the number of leaf nodes, and $\alpha \geq 0$ penalizes complexity. As $\alpha$ increases, larger subtrees get pruned; sklearn's <code>ccp_alpha</code> parameter exposes this directly, and is typically tuned via cross-validated cost-complexity paths.</p>
+    <div class="code-block">
+      <div class="code-head"><span>python · pruned_tree.py</span><button onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="c-kw">from</span> sklearn.tree <span class="c-kw">import</span> DecisionTreeClassifier
+
+<span class="c-com"># Pre-pruning via max_depth — stops growth at depth 5</span>
+tree = DecisionTreeClassifier(max_depth=<span class="c-num">5</span>, random_state=<span class="c-num">42</span>)
+tree.fit(X_train, y_train)
+
+<span class="c-com"># Post-pruning via cost-complexity path</span>
+path = DecisionTreeClassifier(random_state=<span class="c-num">42</span>).cost_complexity_pruning_path(X_train, y_train)
+ccp_alphas = path.ccp_alphas
+
+<span class="c-com"># Cross-validate over alpha values to find the best generalizing subtree</span>
+best_tree = DecisionTreeClassifier(ccp_alpha=ccp_alphas[<span class="c-num">-5</span>], random_state=<span class="c-num">42</span>)</pre>
+    </div>
+  </div>
+
+  <div class="diagram-box glass">
+    <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg">
+      <text x="20" y="22" fill="#eef5fb" font-size="13" font-weight="700" font-family="Inter">Anatomy of a Single Split</text>
+      <g font-family="Inter" font-size="11">
+        <rect x="220" y="40" width="160" height="48" rx="10" fill="rgba(45,212,191,0.14)" stroke="#2dd4bf"/>
+        <text x="300" y="60" fill="#eef5fb" text-anchor="middle">Node: Gini = 0.46</text>
+        <text x="300" y="76" fill="#aac0d2" text-anchor="middle" font-size="9.5">feature ≤ threshold?</text>
+
+        <line x1="270" y1="88" x2="160" y2="150" stroke="#2dd4bf" stroke-width="1.5"/>
+        <text x="195" y="115" fill="#aac0d2" font-size="10">Yes</text>
+        <line x1="330" y1="88" x2="440" y2="150" stroke="#ef7b6b" stroke-width="1.5"/>
+        <text x="395" y="115" fill="#aac0d2" font-size="10">No</text>
+
+        <rect x="80" y="155" width="160" height="48" rx="10" fill="rgba(139,127,216,0.12)" stroke="#8b7fd8"/>
+        <text x="160" y="175" fill="#eef5fb" text-anchor="middle">Left child</text>
+        <text x="160" y="191" fill="#aac0d2" text-anchor="middle" font-size="9.5">Gini = 0.18 (purer)</text>
+
+        <rect x="360" y="155" width="160" height="48" rx="10" fill="rgba(242,185,79,0.12)" stroke="#f2b94f"/>
+        <text x="440" y="175" fill="#eef5fb" text-anchor="middle">Right child</text>
+        <text x="440" y="191" fill="#aac0d2" text-anchor="middle" font-size="9.5">Gini = 0.30 (purer)</text>
+
+        <text x="300" y="235" fill="#aac0d2" text-anchor="middle" font-size="10.5">Information Gain = 0.46 − weighted avg(0.18, 0.30) &gt; 0 → split accepted</text>
+      </g>
+    </svg>
+    <p class="diagram-caption">The tree greedily picks, at every node, the (feature, threshold) pair that maximizes this impurity reduction.</p>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Trade-off</div><h4>Gini vs Entropy in practice</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>They usually produce very similar trees. Gini is slightly cheaper (no logarithm) and is sklearn's default. Entropy is more sensitive to changes in class probability near the extremes, occasionally yielding marginally different splits.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Interview Q</div><h4>Pre-pruning vs post-pruning</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>Pre-pruning (max_depth, min_samples_leaf) stops growth early — cheap but can miss useful splits hidden deeper. Post-pruning (CCP) grows the full tree first, then removes weak subtrees based on validated cost — generally yields better-generalizing trees at higher training cost.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Definition</div><h4>What does $\alpha$ control in CCP?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>The complexity penalty per leaf. $\alpha=0$ recovers the fully grown tree; increasing $\alpha$ makes additional leaves "cost" more, pruning away subtrees whose impurity reduction doesn't justify their added complexity.</p></div>
+    </div></div>
+  </div>
+
+  <div class="quiz-box glass" data-quiz>
+    <h3><i class="fa-solid fa-circle-question"></i> Micro-Quiz</h3>
+    <p class="quiz-q">A decision tree achieves 100% training accuracy but only 68% test accuracy. What's the most direct fix?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" data-correct="false">Switch the splitting criterion from Gini to Entropy.</button>
+      <button class="quiz-opt" data-correct="true">Apply pruning (max_depth, min_samples_leaf, or ccp_alpha) to reduce variance.</button>
+      <button class="quiz-opt" data-correct="false">Remove the random_state parameter.</button>
+      <button class="quiz-opt" data-correct="false">Add more features to the dataset.</button>
+    </div>
+    <div class="quiz-explain">100% train accuracy with a large train-test gap is the signature of an overfit, unconstrained tree memorizing training data. Constraining depth/leaf size or applying cost-complexity pruning directly reduces variance and closes that gap. Switching impurity criteria rarely fixes overfitting.</div>
+  </div>
+</section>
+<section class="section-wrap" id="m8">
+  <div class="eyebrow">Module 08</div>
+  <h2 class="module-title">Random Forests & Bagging Ensembles</h2>
+  <p class="module-desc">A single tree is a high-variance estimator. Bagging trades a population of slightly-different, decorrelated trees for one stable, lower-variance prediction — and gets a free validation set as a byproduct.</p>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-shuffle"></i> Bootstrap Aggregation (Bagging)</h3>
+    <p>Bagging trains $B$ trees, each on an independent bootstrap sample (sampling $n$ rows with replacement from the original $n$-row training set), then averages (regression) or majority-votes (classification) their predictions:</p>
+    <div class="math-box">$$\hat{f}_{bag}(x) = \frac{1}{B}\sum_{b=1}^{B} \hat{f}_b(x)$$</div>
+    <p>Averaging $B$ independent, identically-distributed estimators with variance $\sigma^2$ reduces variance to $\sigma^2/B$ if they're truly independent. Trees from bagging alone are correlated (they see overlapping data), which caps the benefit — motivating Random Forest's extra decorrelation trick.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-tree"></i> Random Forest: Feature Subspace Sampling</h3>
+    <p>At each split, Random Forest restricts the candidate features to a random subset of size $m$ (typically $m = \sqrt{p}$ for classification, $m = p/3$ for regression) rather than all $p$ features. This decorrelates the trees: without it, a few dominant features would force every tree's top splits to look nearly identical, defeating the variance-reduction purpose of averaging.</p>
+    <p><strong>Extra Trees (Extremely Randomized Trees)</strong> push this further by also randomizing the split <em>threshold</em> for each candidate feature (rather than searching for the optimal threshold), trading a bit of bias for even lower variance and faster training.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-flask-vial"></i> Out-of-Bag (OOB) Error — Validation for Free</h3>
+    <p>Each bootstrap sample, drawn with replacement from $n$ rows, excludes roughly $1/e \approx 36.8\%$ of rows on average:</p>
+    <div class="math-box">$$P(\text{row excluded}) = \left(1 - \frac{1}{n}\right)^n \xrightarrow{n\to\infty} e^{-1} \approx 0.368$$</div>
+    <p>These excluded ("out-of-bag") rows act as a free, built-in validation set for that specific tree. The OOB error averages each row's prediction error using only the trees that <em>didn't</em> see that row during training — giving an unbiased estimate of test error without sacrificing any data to a held-out split.</p>
+    <div class="code-block">
+      <div class="code-head"><span>python · random_forest_oob.py</span><button onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="c-kw">from</span> sklearn.ensemble <span class="c-kw">import</span> RandomForestClassifier
+
+rf = RandomForestClassifier(
+    n_estimators=<span class="c-num">300</span>,
+    max_features=<span class="c-str">'sqrt'</span>,
+    oob_score=<span class="c-kw">True</span>,        <span class="c-com"># enables free validation via OOB samples</span>
+    n_jobs=<span class="c-num">-1</span>,
+    random_state=<span class="c-num">42</span>
+)
+rf.fit(X_train, y_train)
+<span class="c-fn">print</span>(<span class="c-str">f"OOB Score: {rf.oob_score_:.4f}"</span>)</pre>
+    </div>
+  </div>
+
+  <div class="diagram-box glass">
+    <svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg">
+      <text x="20" y="22" fill="#eef5fb" font-size="13" font-weight="700" font-family="Inter">Bagging → Random Forest Prediction Flow</text>
+      <g font-family="Inter" font-size="10.5">
+        <rect x="20" y="45" width="100" height="40" rx="8" fill="rgba(45,212,191,0.14)" stroke="#2dd4bf"/>
+        <text x="70" y="69" fill="#eef5fb" text-anchor="middle">Training Set</text>
+
+        <line x1="120" y1="65" x2="155" y2="65" stroke="#aac0d2" stroke-width="1.3"/>
+
+        <rect x="160" y="20" width="110" height="34" rx="7" fill="rgba(139,127,216,0.14)" stroke="#8b7fd8"/>
+        <text x="215" y="41" fill="#eef5fb" text-anchor="middle" font-size="9.5">Bootstrap #1 → Tree₁</text>
+        <rect x="160" y="60" width="110" height="34" rx="7" fill="rgba(139,127,216,0.14)" stroke="#8b7fd8"/>
+        <text x="215" y="81" fill="#eef5fb" text-anchor="middle" font-size="9.5">Bootstrap #2 → Tree₂</text>
+        <rect x="160" y="100" width="110" height="34" rx="7" fill="rgba(139,127,216,0.14)" stroke="#8b7fd8"/>
+        <text x="215" y="121" fill="#eef5fb" text-anchor="middle" font-size="9.5">Bootstrap #B → Tree_B</text>
+
+        <line x1="270" y1="37" x2="330" y2="77" stroke="#aac0d2" stroke-width="1"/>
+        <line x1="270" y1="77" x2="330" y2="77" stroke="#aac0d2" stroke-width="1"/>
+        <line x1="270" y1="117" x2="330" y2="77" stroke="#aac0d2" stroke-width="1"/>
+
+        <rect x="335" y="55" width="140" height="44" rx="9" fill="rgba(242,185,79,0.14)" stroke="#f2b94f"/>
+        <text x="405" y="73" fill="#eef5fb" text-anchor="middle" font-size="10">Average / Majority Vote</text>
+        <text x="405" y="89" fill="#aac0d2" text-anchor="middle" font-size="9">variance ↓ as B ↑</text>
+
+        <line x1="475" y1="77" x2="515" y2="77" stroke="#f2b94f" stroke-width="1.3"/>
+        <rect x="520" y="55" width="100" height="44" rx="9" fill="rgba(45,212,191,0.14)" stroke="#2dd4bf"/>
+        <text x="570" y="80" fill="#eef5fb" text-anchor="middle">Final Prediction</text>
+
+        <text x="320" y="190" fill="#aac0d2" text-anchor="middle" font-size="10">Each tree sees ~63.2% of rows; the unseen ~36.8% form its OOB validation sample.</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Interview Q</div><h4>Why does Random Forest restrict features per split?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>To decorrelate the trees. If every tree could choose from all features, a dominant feature would be chosen at the top of nearly every tree, making them highly correlated and limiting the variance reduction that averaging provides.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Trade-off</div><h4>OOB score vs k-fold cross-validation</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>OOB is essentially free (no extra training runs) and works naturally for bagged ensembles. K-fold CV is more general (works for any model) and lets you control the exact validation strategy, but costs $k\times$ the training time.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Definition</div><h4>What makes Extra Trees "extra" random?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>Beyond Random Forest's feature subsampling, Extra Trees also picks the split threshold for each candidate feature randomly rather than optimizing it — adding bias but further reducing variance and speeding up training since no threshold search is needed.</p></div>
+    </div></div>
+  </div>
+
+  <div class="quiz-box glass" data-quiz>
+    <h3><i class="fa-solid fa-circle-question"></i> Micro-Quiz</h3>
+    <p class="quiz-q">Roughly what fraction of training rows are NOT included in a given bootstrap sample?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" data-correct="false">~10%</button>
+      <button class="quiz-opt" data-correct="true">~36.8% (1/e)</button>
+      <button class="quiz-opt" data-correct="false">~50%</button>
+      <button class="quiz-opt" data-correct="false">~63.2%</button>
+    </div>
+    <div class="quiz-explain">As n grows large, $(1-1/n)^n \to e^{-1} \approx 0.368$. So about 36.8% of rows are excluded from any given bootstrap sample (and thus available as OOB validation data for that tree) — the inverse, ~63.2%, is the fraction included, often duplicated.</div>
+  </div>
+</section>
+<section class="section-wrap" id="m9">
+  <div class="eyebrow">Module 09</div>
+  <h2 class="module-title">Gradient Boosting — XGBoost, LightGBM & CatBoost</h2>
+  <p class="module-desc">Where bagging averages independent trees, boosting builds them sequentially, each one correcting the previous ensemble's mistakes. The modern GBM libraries differ mainly in how they grow trees and approximate the loss.</p>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-stairs"></i> The Boosting Framework</h3>
+    <p>Boosting builds an additive model stage-wise. At stage $m$, it adds a new weak learner $h_m$ that best reduces the current loss:</p>
+    <div class="math-box">$$F_m(x) = F_{m-1}(x) + \eta \cdot h_m(x)$$</div>
+    <p>where $\eta$ is the learning rate (shrinkage) controlling how much each new tree is trusted. $h_m$ is fit not to the raw target but to the <strong>negative gradient</strong> of the loss with respect to the current predictions — i.e. each tree learns to predict the residual error direction of the ensemble so far.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-square-root-variable"></i> XGBoost: Second-Order Taylor Approximation</h3>
+    <p>XGBoost's key innovation is approximating the loss function around the current prediction using a <strong>second-order Taylor expansion</strong>, using both the gradient $g_i$ and Hessian $h_i$ of the loss:</p>
+    <div class="math-box">$$\mathcal{L}^{(t)} \approx \sum_{i=1}^n \left[ g_i f_t(x_i) + \frac{1}{2}h_i f_t(x_i)^2 \right] + \Omega(f_t)$$</div>
+    <p>where $g_i = \partial_{\hat{y}} l(y_i, \hat{y}^{(t-1)})$, $h_i = \partial^2_{\hat{y}} l(y_i,\hat{y}^{(t-1)})$, and $\Omega(f_t) = \gamma T + \frac{1}{2}\lambda\sum_j w_j^2$ regularizes tree complexity ($T$ leaves, leaf weights $w_j$). For a fixed tree structure, the optimal leaf weight and the resulting quality score have closed forms:</p>
+    <div class="math-box">
+      $$w_j^* = -\frac{\sum_{i \in I_j} g_i}{\sum_{i \in I_j} h_i + \lambda}, \qquad \mathcal{L}^* = -\frac{1}{2}\sum_j \frac{(\sum_{i\in I_j} g_i)^2}{\sum_{i \in I_j} h_i + \lambda} + \gamma T$$
+    </div>
+    <p>This closed-form score lets XGBoost evaluate candidate splits exactly, without needing to retrain — the basis for its exact and approximate split-finding algorithms.</p>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-layer-group"></i> Level-wise vs Leaf-wise Growth</h3>
+    <div class="grid-2">
+      <div>
+        <p><strong>XGBoost (level-wise / depth-wise)</strong> grows all nodes at the current depth before moving deeper, keeping the tree balanced. This is more conservative and resistant to overfitting on smaller datasets.</p>
+      </div>
+      <div>
+        <p><strong>LightGBM (leaf-wise)</strong> always splits the single leaf with the highest loss reduction, regardless of depth — producing deeper, asymmetric trees that converge faster and often achieve lower loss for the same number of leaves, at higher overfitting risk on small data (mitigated via <code>max_depth</code> and <code>min_data_in_leaf</code>).</p>
+      </div>
+    </div>
+    <div class="diagram-box" style="margin-top:6px;">
+      <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+        <text x="80" y="20" fill="#eef5fb" font-size="11.5" font-weight="700" font-family="Inter" text-anchor="middle">Level-wise (XGBoost)</text>
+        <circle cx="80" cy="45" r="14" fill="rgba(45,212,191,0.25)" stroke="#2dd4bf"/>
+        <circle cx="50" cy="90" r="13" fill="rgba(45,212,191,0.2)" stroke="#2dd4bf"/>
+        <circle cx="110" cy="90" r="13" fill="rgba(45,212,191,0.2)" stroke="#2dd4bf"/>
+        <circle cx="30" cy="135" r="11" fill="rgba(45,212,191,0.15)" stroke="#2dd4bf"/>
+        <circle cx="70" cy="135" r="11" fill="rgba(45,212,191,0.15)" stroke="#2dd4bf"/>
+        <circle cx="90" cy="135" r="11" fill="rgba(45,212,191,0.15)" stroke="#2dd4bf"/>
+        <circle cx="130" cy="135" r="11" fill="rgba(45,212,191,0.15)" stroke="#2dd4bf"/>
+        <line x1="80" y1="59" x2="50" y2="77" stroke="#2dd4bf" stroke-width="1"/>
+        <line x1="80" y1="59" x2="110" y2="77" stroke="#2dd4bf" stroke-width="1"/>
+        <line x1="50" y1="103" x2="30" y2="124" stroke="#2dd4bf" stroke-width="1"/>
+        <line x1="50" y1="103" x2="70" y2="124" stroke="#2dd4bf" stroke-width="1"/>
+        <line x1="110" y1="103" x2="90" y2="124" stroke="#2dd4bf" stroke-width="1"/>
+        <line x1="110" y1="103" x2="130" y2="124" stroke="#2dd4bf" stroke-width="1"/>
+        <text x="80" y="175" fill="#aac0d2" font-size="9.5" text-anchor="middle">All nodes at depth d split before depth d+1</text>
+
+        <text x="470" y="20" fill="#eef5fb" font-size="11.5" font-weight="700" font-family="Inter" text-anchor="middle">Leaf-wise (LightGBM)</text>
+        <circle cx="470" cy="45" r="14" fill="rgba(242,185,79,0.25)" stroke="#f2b94f"/>
+        <circle cx="440" cy="90" r="13" fill="rgba(242,185,79,0.2)" stroke="#f2b94f"/>
+        <circle cx="500" cy="90" r="13" fill="rgba(242,185,79,0.2)" stroke="#f2b94f"/>
+        <circle cx="480" cy="135" r="11" fill="rgba(242,185,79,0.15)" stroke="#f2b94f"/>
+        <circle cx="520" cy="135" r="11" fill="rgba(242,185,79,0.15)" stroke="#f2b94f"/>
+        <circle cx="500" cy="170" r="9" fill="rgba(242,185,79,0.12)" stroke="#f2b94f"/>
+        <circle cx="540" cy="170" r="9" fill="rgba(242,185,79,0.12)" stroke="#f2b94f"/>
+        <line x1="470" y1="59" x2="440" y2="77" stroke="#f2b94f" stroke-width="1"/>
+        <line x1="470" y1="59" x2="500" y2="77" stroke="#f2b94f" stroke-width="1"/>
+        <line x1="500" y1="103" x2="480" y2="124" stroke="#f2b94f" stroke-width="1"/>
+        <line x1="500" y1="103" x2="520" y2="124" stroke="#f2b94f" stroke-width="1"/>
+        <line x1="520" y1="146" x2="500" y2="161" stroke="#f2b94f" stroke-width="1"/>
+        <line x1="520" y1="146" x2="540" y2="161" stroke="#f2b94f" stroke-width="1"/>
+        <text x="490" y="195" fill="#aac0d2" font-size="9.5" text-anchor="middle">Only the highest-loss leaf splits next</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="theory-block glass">
+    <h3><i class="fa-solid fa-list-check"></i> CatBoost: Native Categorical Handling</h3>
+    <p>Naively target-encoding categories (using the full dataset's target mean) leaks information. <strong>CatBoost</strong> uses <strong>Ordered Target Statistics</strong>: for each row, it computes the category's target mean using only rows that appear <em>before</em> it in a random permutation, simulating an online/out-of-fold encoding without ever using a row's own label:</p>
+    <div class="math-box">$$\hat{x}_i^k = \frac{\sum_{j<i,\, x_j^k = x_i^k} y_j + a\cdot P}{\sum_{j<i,\, x_j^k=x_i^k} 1 + a}$$</div>
+    <p>CatBoost also builds <strong>symmetric (oblivious) trees</strong> — every node at a given depth uses the same split condition — which makes prediction extremely fast and acts as a form of regularization.</p>
+    <div class="code-block">
+      <div class="code-head"><span>python · gradient_boosting_libs.py</span><button onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="c-kw">import</span> xgboost <span class="c-kw">as</span> xgb
+<span class="c-kw">from</span> catboost <span class="c-kw">import</span> CatBoostClassifier
+
+<span class="c-com"># XGBoost with early stopping on a validation set</span>
+xgb_model = xgb.XGBClassifier(
+    n_estimators=<span class="c-num">1000</span>, learning_rate=<span class="c-num">0.05</span>, max_depth=<span class="c-num">6</span>,
+    early_stopping_rounds=<span class="c-num">50</span>, eval_metric=<span class="c-str">'auc'</span>, random_state=<span class="c-num">42</span>
+)
+xgb_model.fit(
+    X_train, y_train,
+    eval_set=[(X_val, y_val)],
+    verbose=<span class="c-kw">False</span>
+)
+
+<span class="c-com"># CatBoost: pass categorical column names/indices directly, no manual encoding</span>
+cat_model = CatBoostClassifier(iterations=<span class="c-num">500</span>, learning_rate=<span class="c-num">0.05</span>, depth=<span class="c-num">6</span>, verbose=<span class="c-num">0</span>)
+cat_model.fit(X_train, y_train, cat_features=[<span class="c-str">'city'</span>, <span class="c-str">'job'</span>])</pre>
+    </div>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Interview Q</div><h4>Why does XGBoost need the Hessian, not just the gradient?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>The second-order term lets XGBoost compute the exact optimal leaf weight and split-quality score in closed form for any candidate split, rather than relying only on a first-order (gradient-only) approximation — giving more precise splits and faster convergence.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Trade-off</div><h4>LightGBM speed vs overfitting risk</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>Leaf-wise growth converges faster and often reaches lower training loss per leaf budget, but the resulting deep, unbalanced trees can overfit small datasets more easily than XGBoost's balanced level-wise trees — controlled via <code>max_depth</code> and <code>min_data_in_leaf</code>.</p></div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-face flip-front"><div class="tag">Definition</div><h4>What is "Ordered Boosting" in CatBoost?</h4><div class="hint"><i class="fa-solid fa-rotate"></i> Tap to reveal</div></div>
+      <div class="flip-face flip-back"><div class="tag">Answer</div><p>A technique where, for each row, the residual used to fit the next tree is computed using a model trained only on rows before it in a random permutation — avoiding the "target leakage" that occurs in standard boosting when residuals are computed using a model that already saw that row's label.</p></div>
+    </div></div>
+  </div>
+
+  <div class="quiz-box glass" data-quiz>
+    <h3><i class="fa-solid fa-circle-question"></i> Micro-Quiz</h3>
+    <p class="quiz-q">You have a dataset with many high-cardinality categorical columns and limited time for feature engineering. Which library handles this most natively?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" data-correct="false">XGBoost, since it has the most GitHub stars.</button>
+      <button class="quiz-opt" data-correct="false">Random Forest, since trees handle categories well by default.</button>
+      <button class="quiz-opt" data-correct="true">CatBoost, since it has native ordered target encoding for categorical features.</button>
+      <button class="quiz-opt" data-correct="false">None — categorical columns must always be manually one-hot encoded first.</button>
+    </div>
+    <div class="quiz-explain">CatBoost was specifically designed to handle categorical features natively via ordered target statistics, avoiding both manual encoding work and the leakage that naive target encoding introduces — a major practical advantage for categorical-heavy tabular data.</</div>
+  </div>
+</section>
+<section class="section-wrap" id="qbank">
+  <div class="eyebrow">Practice Bank</div>
+  <h2 class="module-title">Question Bank — All 20, Fully Solved</h2>
+  <p class="module-desc">Every question from the course problem set, with complete, copy-ready code answers. Click any row to expand.</p>
+
+  <div class="pill-row">
+    <span class="pill"><i class="fa-solid fa-1"></i> Python Fundamentals</span>
+    <span class="pill"><i class="fa-solid fa-2"></i> Git & Reproducibility</span>
+    <span class="pill"><i class="fa-solid fa-3"></i> Imbalanced Data</span>
+    <span class="pill"><i class="fa-solid fa-4"></i> Tree-Based & Boosting</span>
+    <span class="pill"><i class="fa-solid fa-5"></i> Regression & Validation</span>
+  </div>
+
+  <h3 style="color:var(--ink-bright); font-size:1.15rem; margin:30px 0 14px; font-family:var(--font-display);">Section 1 — Python Fundamentals & Data Structures</h3>
+  <div class="accordion" id="acc-s1">
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q1. Input and Type Conversion<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Take age as user input and convert it into an integer for numerical operations.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre>age = <span class="c-fn">int</span>(<span class="c-fn">input</span>(<span class="c-str">"Enter your age: "</span>))
+<span class="c-fn">print</span>(<span class="c-str">f"In 5 years you will be {age + 5}"</span>)</pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q2. List Access (Negative Indexing)<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Given <code>students = ["Rahul", "Priya", "Aman"]</code>, access the last element using negative indexing.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre>students = [<span class="c-str">"Rahul"</span>, <span class="c-str">"Priya"</span>, <span class="c-str">"Aman"</span>]
+last_student = students[<span class="c-num">-1</span>]   <span class="c-com"># "Aman"</span></pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q3. List Modification (Append)<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Add the name "Karan" to the end of the <code>students</code> list.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre>students.append(<span class="c-str">"Karan"</span>)
+<span class="c-fn">print</span>(students)  <span class="c-com"># ['Rahul', 'Priya', 'Aman', 'Karan']</span></pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q4. Dictionary Frequency Map<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Count the frequency of characters in <code>word = "banana"</code> using a dictionary <code>freq</code>.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre>word = <span class="c-str">"banana"</span>
+freq = {}
+<span class="c-kw">for</span> ch <span class="c-kw">in</span> word:
+    freq[ch] = freq.get(ch, <span class="c-num">0</span>) + <span class="c-num">1</span>
+<span class="c-fn">print</span>(freq)  <span class="c-com"># {'b': 1, 'a': 3, 'n': 2}</span></pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q5. Range and Step (Odd Numbers)<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Use a <code>for</code> loop and <code>range()</code> to print all odd numbers from 1 to 10.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c-kw">for</span> i <span class="c-kw">in</span> <span class="c-fn">range</span>(<span class="c-num">1</span>, <span class="c-num">11</span>, <span class="c-num">2</span>):
+    <span class="c-fn">print</span>(i)   <span class="c-com"># 1 3 5 7 9</span></pre></div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3 style="color:var(--ink-bright); font-size:1.15rem; margin:36px 0 14px; font-family:var(--font-display);">Section 2 — Git & Reproducibility</h3>
+  <div class="accordion" id="acc-s2">
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q6. Project Initialization<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Write the Git command to start tracking a new ML project folder.</p>
+        <div class="code-block"><div class="code-head"><span>bash</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre>git init
+git add .
+git commit -m <span class="c-str">"Initial commit: project scaffold"</span></pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q7. Fixing Randomness<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Set a fixed random seed for both NumPy and Python's native <code>random</code> module.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c-kw">import</span> random
+<span class="c-kw">import</span> numpy <span class="c-kw">as</span> np
+
+random.seed(<span class="c-num">42</span>)
+np.random.seed(<span class="c-num">42</span>)</pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q8. Branch Management<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Create and switch to a new branch named <code>experiment-xgboost</code>.</p>
+        <div class="code-block"><div class="code-head"><span>bash</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre>git checkout -b experiment-xgboost
+<span class="c-com"># or, modern syntax:</span>
+git switch -c experiment-xgboost</pre></div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3 style="color:var(--ink-bright); font-size:1.15rem; margin:36px 0 14px; font-family:var(--font-display);">Section 3 — Imbalanced Data & Preprocessing</h3>
+  <div class="accordion" id="acc-s3">
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q9. Cost-Sensitive Learning<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Instantiate a Logistic Regression model where missing a minority class "1" is 1000× more expensive than a false alarm.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c-kw">from</span> sklearn.linear_model <span class="c-kw">import</span> LogisticRegression
+
+model = LogisticRegression(
+    class_weight={<span class="c-num">0</span>: <span class="c-num">1</span>, <span class="c-num">1</span>: <span class="c-num">1000</span>},
+    max_iter=<span class="c-num">1000</span>,
+    random_state=<span class="c-num">42</span>
+)</pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q10. Sentinel Value Handling<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Column <code>pdays</code> uses <code>999</code> to mean "never contacted." Create a boolean flag for these records.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre>df[<span class="c-str">'never_contacted'</span>] = (df[<span class="c-str">'pdays'</span>] == <span class="c-num">999</span>).astype(<span class="c-kw">int</span>)
+
+<span class="c-com"># Optional: replace the sentinel so it doesn't distort numeric stats</span>
+df[<span class="c-str">'pdays_clean'</span>] = df[<span class="c-str">'pdays'</span>].replace(<span class="c-num">999</span>, np.nan)</pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q11. Production-Safe One-Hot Encoding<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Define a <code>OneHotEncoder</code> that won't crash on a category unseen during training.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c-kw">from</span> sklearn.preprocessing <span class="c-kw">import</span> OneHotEncoder
+
+ohe = OneHotEncoder(handle_unknown=<span class="c-str">'ignore'</span>, sparse_output=<span class="c-kw">False</span>)</pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q12. Pipeline Construction<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Create a Scikit-learn <code>Pipeline</code> that scales data with <code>StandardScaler</code> then fits a <code>Ridge</code> regression.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c-kw">from</span> sklearn.pipeline <span class="c-kw">import</span> Pipeline
+<span class="c-kw">from</span> sklearn.preprocessing <span class="c-kw">import</span> StandardScaler
+<span class="c-kw">from</span> sklearn.linear_model <span class="c-kw">import</span> Ridge
+
+pipe = Pipeline([
+    (<span class="c-str">'scaler'</span>, StandardScaler()),
+    (<span class="c-str">'model'</span>, Ridge(alpha=<span class="c-num">1.0</span>))
+])
+pipe.fit(X_train, y_train)</pre></div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3 style="color:var(--ink-bright); font-size:1.15rem; margin:36px 0 14px; font-family:var(--font-display);">Section 4 — Tree-Based Models & Boosting</h3>
+  <div class="accordion" id="acc-s4">
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q13. Decision Tree Pruning<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Instantiate a Decision Tree that stops growing once it reaches a depth of 5.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c-kw">from</span> sklearn.tree <span class="c-kw">import</span> DecisionTreeClassifier
+
+tree = DecisionTreeClassifier(max_depth=<span class="c-num">5</span>, random_state=<span class="c-num">42</span>)</pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q14. Random Forest OOB Score<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Instantiate a Random Forest that validates "for free" using out-of-bag samples.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c-kw">from</span> sklearn.ensemble <span class="c-kw">import</span> RandomForestClassifier
+
+rf = RandomForestClassifier(
+    n_estimators=<span class="c-num">300</span>, oob_score=<span class="c-kw">True</span>, random_state=<span class="c-num">42</span>
+)
+rf.fit(X_train, y_train)
+<span class="c-fn">print</span>(rf.oob_score_)</pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q15. XGBoost Early Stopping<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Fit an XGBoost model <code>xgb_model</code> that stops if validation loss doesn't improve for 50 rounds.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c-kw">import</span> xgboost <span class="c-kw">as</span> xgb
+
+xgb_model = xgb.XGBClassifier(
+    n_estimators=<span class="c-num">1000</span>, learning_rate=<span class="c-num">0.05</span>,
+    early_stopping_rounds=<span class="c-num">50</span>, eval_metric=<span class="c-str">'logloss'</span>,
+    random_state=<span class="c-num">42</span>
+)
+xgb_model.fit(X_train, y_train, eval_set=[(X_val, y_val)], verbose=<span class="c-kw">False</span>)</pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q16. CatBoost Categorical Features<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Write the <code>fit</code> command for a CatBoost model where columns <code>city</code> and <code>job</code> are non-numeric.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c-kw">from</span> catboost <span class="c-kw">import</span> CatBoostClassifier
+
+cat_model = CatBoostClassifier(iterations=<span class="c-num">500</span>, learning_rate=<span class="c-num">0.05</span>, verbose=<span class="c-num">0</span>)
+cat_model.fit(X_train, y_train, cat_features=[<span class="c-str">'city'</span>, <span class="c-str">'job'</span>])</pre></div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3 style="color:var(--ink-bright); font-size:1.15rem; margin:36px 0 14px; font-family:var(--font-display);">Section 5 — Regression & Validation</h3>
+  <div class="accordion" id="acc-s5">
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q17. VIF & Multicollinearity → Ridge<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">What's the code-based logic to apply Ridge regression when multicollinearity is detected?</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c-kw">from</span> statsmodels.stats.outliers_influence <span class="c-kw">import</span> variance_inflation_factor
+<span class="c-kw">from</span> sklearn.linear_model <span class="c-kw">import</span> Ridge
+
+vif_data = pd.DataFrame()
+vif_data[<span class="c-str">"feature"</span>] = X.columns
+vif_data[<span class="c-str">"VIF"</span>] = [variance_inflation_factor(X.values, i) <span class="c-kw">for</span> i <span class="c-kw">in</span> <span class="c-fn">range</span>(X.shape[<span class="c-num">1</span>])]
+
+<span class="c-com"># If any VIF > 5-10, multicollinearity is present -> use Ridge instead of plain OLS</span>
+<span class="c-kw">if</span> (vif_data[<span class="c-str">"VIF"</span>] &gt; <span class="c-num">5</span>).<span class="c-fn">any</span>():
+    model = Ridge(alpha=<span class="c-num">1.0</span>)
+<span class="c-kw">else</span>:
+    model = LinearRegression()
+model.fit(X_train, y_train)</pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q18. Time Series Differencing<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Make a non-stationary time series stationary by calculating daily changes.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre>series_diff = series.diff().dropna()</pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q19. Shuffled Cross-Validation<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Define a 5-fold cross-validation object that shuffles the data before splitting.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c-kw">from</span> sklearn.model_selection <span class="c-kw">import</span> KFold
+
+cv = KFold(n_splits=<span class="c-num">5</span>, shuffle=<span class="c-kw">True</span>, random_state=<span class="c-num">42</span>)</pre></div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">Q20. Grid Search Definition<i class="fa-solid fa-chevron-down"></i></div>
+      <div class="accordion-body">
+        <p class="q-label">QUESTION</p>
+        <p class="q-text">Define a grid search over <code>n_estimators</code> values of 10, 50, and 100 for a Random Forest.</p>
+        <div class="code-block"><div class="code-head"><span>python</span><button onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c-kw">from</span> sklearn.model_selection <span class="c-kw">import</span> GridSearchCV
+<span class="c-kw">from</span> sklearn.ensemble <span class="c-kw">import</span> RandomForestClassifier
+
+param_grid = {<span class="c-str">'n_estimators'</span>: [<span class="c-num">10</span>, <span class="c-num">50</span>, <span class="c-num">100</span>]}
+grid = GridSearchCV(RandomForestClassifier(random_state=<span class="c-num">42</span>), param_grid, cv=<span class="c-num">5</span>)
+grid.fit(X_train, y_train)
+<span class="c-fn">print</span>(grid.best_params_)</pre></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="fline"></div>
+  <p>Built by <a href="https://akhisweety01-hub.github.io/BDAY/" style="color: inherit; text-decoration: underline;">YASH RAJ</a> · All rights reserved</p>
+  <p class="neon-red-blink" style="margin-top:6px; font-size:0.74rem;">All derivations and code are for educational reference - CLICK ON MY NAME FOR DONATION</p>
+</footer>
+<script>
+/* ============ WEBGL: ANIMATED GRADIENT + WATER RIPPLE FIELD ============ */
+(function(){
+  const canvas = document.getElementById('rippleCanvas');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const gl = canvas.getContext('webgl', { alpha:true, premultipliedAlpha:false, antialias:true })
+          || canvas.getContext('experimental-webgl', { alpha:true, premultipliedAlpha:false });
+
+  if(!gl){
+    canvas.style.background = 'radial-gradient(circle at 20% 20%, rgba(45,212,191,0.14), transparent 45%), radial-gradient(circle at 85% 70%, rgba(139,127,216,0.12), transparent 50%)';
+    return;
+  }
+
+  const vsSource = `
+    attribute vec2 a_pos;
+    void main(){ gl_Position = vec4(a_pos, 0.0, 1.0); }
+  `;
+
+  // Palette: teal -> violet -> amber -> coral, matching the site design tokens.
+  const fsSource = `
+    precision highp float;
+    uniform vec2 u_resolution;
+    uniform float u_time;
+    uniform vec4 u_ripples[10];   // x, y (px), startTime, strength
+    uniform int u_rippleCount;
+    uniform vec2 u_mouse;
+    uniform float u_mouseActive;
+
+    vec3 palette(float t){
+      vec3 indigo = vec3(91.0,95.0,239.0)/255.0;
+      vec3 violet = vec3(168.0,85.0,247.0)/255.0;
+      vec3 cyan   = vec3(0.0,217.0,255.0)/255.0;
+      t = fract(t);
+      if(t < 0.5){
+        return mix(indigo, violet, smoothstep(0.0,1.0,t*2.0));
+      } else {
+        return mix(violet, cyan, smoothstep(0.0,1.0,(t-0.5)*2.0));
+      }
+    }
+
+    /* Smooth noise for organic gradient drift */
+    float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453); }
+    float noise(vec2 p){
+      vec2 i = floor(p); vec2 f = fract(p);
+      vec2 u = f*f*(3.0-2.0*f);
+      return mix(mix(hash(i+vec2(0,0)),hash(i+vec2(1,0)),u.x),
+                 mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),u.x),u.y);
+    }
+
+    void main(){
+      vec2 uv = gl_FragCoord.xy;
+      vec2 st = gl_FragCoord.xy / u_resolution.xy;
+
+      float totalHeight = 0.0;
+      float colorMix = 0.0;
+      float weightSum = 0.0001;
+
+      for(int i = 0; i < 10; i++){
+        if(i >= u_rippleCount) break;
+        vec4 r = u_ripples[i];
+        vec2 center = r.xy;
+        float age = u_time - r.z;
+        float strength = r.w;
+        if(age < 0.0 || age > 3.0) continue;
+
+        float dist = distance(uv, center);
+        float waveFront = age * 380.0;
+        float band = dist - waveFront;
+
+        float ring = exp(-abs(band) * 0.018) * exp(-age * 0.85);
+        float ripple = sin(band * 0.065 - age * 4.5) * ring;
+
+        totalHeight += ripple * strength;
+        colorMix += (dist * 0.0024 + age * 0.32) * ring * strength;
+        weightSum += ring * strength;
+      }
+
+      float hue = colorMix / weightSum + u_time * 0.012;
+      vec3 col = palette(hue);
+
+      /* Rich multi-layer ambient drifting gradient wash */
+      float n1 = noise(st * 2.8 + vec2(u_time * 0.04, u_time * 0.03));
+      float n2 = noise(st * 1.6 - vec2(u_time * 0.025, u_time * 0.035));
+      float n3 = noise(st * 4.2 + vec2(-u_time * 0.05, u_time * 0.02));
+      float blend = n1 * 0.5 + n2 * 0.3 + n3 * 0.2;
+
+      float waveA = sin(st.x * 3.2 + u_time * 0.05) * cos(st.y * 2.6 - u_time * 0.04) * 0.5 + 0.5;
+      float waveB = sin(st.x * 1.8 - u_time * 0.03 + 1.2) * cos(st.y * 3.4 + u_time * 0.06) * 0.5 + 0.5;
+      float waveC = cos((st.x + st.y) * 2.2 + u_time * 0.045) * 0.5 + 0.5;
+
+      float ambient = waveA * 0.45 + waveB * 0.35 + waveC * 0.20;
+      ambient = mix(ambient, blend, 0.35);
+
+      vec3 ambientCol = palette(ambient * 0.4 + u_time * 0.009);
+
+      float intensity = clamp(abs(totalHeight) * 1.8, 0.0, 1.0);
+      vec3 finalCol = mix(ambientCol, col, intensity);
+
+      /* Ambient alpha is stronger so gradients are always visible */
+      float alpha = clamp(intensity * 0.55 + ambient * 0.12, 0.0, 0.45);
+
+      /* Soft cursor glow */
+      if(u_mouseActive > 0.5){
+        float md = distance(uv, u_mouse);
+        float glow = exp(-md * 0.009) * 0.22;
+        finalCol = mix(finalCol, palette(u_time*0.02 + 0.15), glow * 0.65);
+        alpha += glow * 0.9;
+      }
+
+      gl_FragColor = vec4(finalCol, alpha);
+    }
+  `;
+
+  function compile(type, src){
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
+      console.warn('Shader compile error:', gl.getShaderInfoLog(s));
+      gl.deleteShader(s);
+      return null;
+    }
+    return s;
+  }
+
+  const vs = compile(gl.VERTEX_SHADER, vsSource);
+  const fs = compile(gl.FRAGMENT_SHADER, fsSource);
+  if(!vs || !fs){ return; }
+
+  const program = gl.createProgram();
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  if(!gl.getProgramParameter(program, gl.LINK_STATUS)){
+    console.warn('Program link error:', gl.getProgramInfoLog(program));
+    return;
+  }
+  gl.useProgram(program);
+
+  const quad = new Float32Array([-1,-1, 1,-1, -1,1, 1,1]);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, quad, gl.STATIC_DRAW);
+  const posLoc = gl.getAttribLocation(program, 'a_pos');
+  gl.enableVertexAttribArray(posLoc);
+  gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+  const u_resolution = gl.getUniformLocation(program, 'u_resolution');
+  const u_time = gl.getUniformLocation(program, 'u_time');
+  const u_ripples = gl.getUniformLocation(program, 'u_ripples');
+  const u_rippleCount = gl.getUniformLocation(program, 'u_rippleCount');
+  const u_mouse = gl.getUniformLocation(program, 'u_mouse');
+  const u_mouseActive = gl.getUniformLocation(program, 'u_mouseActive');
+
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let w, h;
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const MAX_RIPPLES = 10;
+  let ripples = [];
+  let startClock = performance.now();
+  function clockNow(){ return (performance.now() - startClock) / 1000; }
+
+  function pushRipple(clientX, clientY, strength){
+    const x = clientX * dpr;
+    const y = (h - clientY) * dpr;
+    ripples.push({ x, y, t: clockNow(), strength });
+    if(ripples.length > MAX_RIPPLES) ripples.shift();
+  }
+
+  let lastMoveEmit = 0;
+  let mouse = { x: -9999, y: -9999, active: false };
+
+  function onPointerMove(e){
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    const y = e.touches ? e.touches[0].clientY : e.clientY;
+    mouse.x = x * dpr;
+    mouse.y = (h - y) * dpr;
+    mouse.active = true;
+
+    const now = performance.now();
+    if(now - lastMoveEmit > 55){
+      pushRipple(x, y, 0.65);
+      lastMoveEmit = now;
+    }
+    window.__antigravityMouse = { x, y, active: true };
+  }
+  function onPointerDown(e){
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    const y = e.touches ? e.touches[0].clientY : e.clientY;
+    pushRipple(x, y, 2.2);
+  }
+  window.addEventListener('mousemove', onPointerMove, { passive:true });
+  window.addEventListener('touchmove', onPointerMove, { passive:true });
+  window.addEventListener('mousedown', onPointerDown, { passive:true });
+  window.addEventListener('touchstart', onPointerDown, { passive:true });
+  window.addEventListener('mouseleave', () => { mouse.active = false; window.__antigravityMouse = { active:false }; });
+
+  function ambientPulse(){
+    if(document.hidden) return;
+    const x = Math.random() * w;
+    const y = Math.random() * h;
+    pushRipple(x, y, 0.5);
+  }
+  let ambientInterval = setInterval(ambientPulse, 3000);
+
+  function render(){
+    const now = clockNow();
+    ripples = ripples.filter(r => (now - r.t) < 3.0);
+
+    gl.uniform2f(u_resolution, canvas.width, canvas.height);
+    gl.uniform1f(u_time, now);
+    gl.uniform1i(u_rippleCount, Math.min(ripples.length, MAX_RIPPLES));
+    gl.uniform2f(u_mouse, mouse.active ? mouse.x : -9999, mouse.active ? mouse.y : -9999);
+    gl.uniform1f(u_mouseActive, mouse.active ? 1.0 : 0.0);
+
+    const flat = new Float32Array(MAX_RIPPLES * 4);
+    for(let i = 0; i < ripples.length; i++){
+      const r = ripples[i];
+      flat[i*4+0] = r.x;
+      flat[i*4+1] = r.y;
+      flat[i*4+2] = r.t;
+      flat[i*4+3] = r.strength;
+    }
+    gl.uniform4fv(u_ripples, flat);
+
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+    if(!reduceMotion){
+      requestAnimationFrame(render);
+    }
+  }
+
+  if(reduceMotion){
+    clearInterval(ambientInterval);
+    render();
+  } else {
+    requestAnimationFrame(render);
+  }
+})();
+
+/* ============ ANTIGRAVITY PARTICLES: drift, gently repelled by cursor ============ */
+(function(){
+  const canvas = document.getElementById('particleCanvas');
+  const ctx = canvas.getContext('2d');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion){ return; }
+
+  let w, h, dpr;
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth; h = window.innerHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const COLORS = ['45,212,191', '139,127,216', '242,185,79', '239,123,107'];
+  const COUNT = Math.min(90, Math.floor((window.innerWidth * window.innerHeight) / 14000));
+
+  function makeParticle(){
+    return {
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random()-0.5) * 0.22,
+      vy: (Math.random()-0.5) * 0.22,
+      baseR: 1.4 + Math.random() * 2.6,
+      color: COLORS[Math.floor(Math.random()*COLORS.length)],
+      alpha: 0.28 + Math.random() * 0.38
+    };
+  }
+  let particles = Array.from({length: COUNT}, makeParticle);
+
+  const REPEL_RADIUS = 180;
+  const REPEL_STRENGTH = 1600;
+
+  function tick(){
+    const m = window.__antigravityMouse;
+    ctx.clearRect(0, 0, w, h);
+
+    particles.forEach(p => {
+      // gentle ambient drift
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // antigravity: push particles away from the cursor
+      if(m && m.active){
+        const dx = p.x - m.x;
+        const dy = p.y - m.y;
+        const distSq = dx*dx + dy*dy;
+        const dist = Math.sqrt(distSq) || 0.01;
+        if(dist < REPEL_RADIUS){
+          const force = (1 - dist / REPEL_RADIUS) * (REPEL_STRENGTH / (distSq + 400));
+          p.vx += (dx / dist) * force * 0.02;
+          p.vy += (dy / dist) * force * 0.02;
+        }
+      }
+
+      // gentle drag so repelled particles settle back to ambient drift
+      p.vx *= 0.96;
+      p.vy *= 0.96;
+
+      // wrap around edges
+      if(p.x < -20) p.x = w + 20;
+      if(p.x > w + 20) p.x = -20;
+      if(p.y < -20) p.y = h + 20;
+      if(p.y > h + 20) p.y = -20;
+
+      const speed = Math.hypot(p.vx, p.vy);
+      const r = p.baseR + Math.min(speed * 1.4, 2.5);
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
+      ctx.shadowColor = `rgba(${p.color},0.6)`;
+      ctx.shadowBlur = 6;
+      ctx.fill();
+    });
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ============ COPY CODE ============ */
+function copyCode(btn){
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(()=>{
+    const old = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(()=> btn.textContent = old, 1400);
+  });
+}
+
+/* ============ FLIPCARDS ============ */
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('flipped'));
+});
+
+/* ============ QUIZZES ============ */
+document.querySelectorAll('[data-quiz]').forEach(quiz => {
+  const opts = quiz.querySelectorAll('.quiz-opt');
+  const explain = quiz.querySelector('.quiz-explain');
+  let answered = false;
+  opts.forEach(opt => {
+    opt.addEventListener('click', () => {
+      if(answered) return;
+      answered = true;
+      opts.forEach(o => {
+        o.disabled = true;
+        if(o.dataset.correct === 'true') o.classList.add('correct');
+        else if(o === opt) o.classList.add('wrong');
+      });
+      explain.classList.add('show');
+    });
+  });
+});
+
+/* ============ ACCORDION (Q-Bank) ============ */
+document.querySelectorAll('.accordion-item').forEach(item => {
+  const head = item.querySelector('.accordion-head');
+  const body = item.querySelector('.accordion-body');
+  head.addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    if(isOpen){
+      item.classList.remove('open');
+      body.style.maxHeight = '0px';
+    } else {
+      item.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  });
+});
+
+/* ============ NAV + SCROLL SPY + PROGRESS BAR ============ */
+const sections = ['hero','m1','m2','m3','m4','m5','m6','m7','m8','m9','qbank'];
+const navButtons = document.querySelectorAll('nav.module-nav button');
+const menuToggle = document.getElementById('menuToggle');
+const moduleNav = document.getElementById('moduleNav');
+
+navButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = document.getElementById(btn.dataset.target);
+    if(target) target.scrollIntoView({behavior:'smooth'});
+    moduleNav.classList.remove('mobile-open');
+  });
+});
+
+menuToggle.addEventListener('click', () => {
+  moduleNav.classList.toggle('mobile-open');
+});
+
+/* Progress dock dots */
+const dock = document.getElementById('progressDock');
+const dotLabels = {
+  hero:'Home', m1:'01 Imbalanced', m2:'02 Pipelines', m3:'03 Git/MLOps',
+  m4:'04 Regularization', m5:'05 Regression+', m6:'06 Time Series',
+  m7:'07 Trees', m8:'08 Ensembles', m9:'09 Boosting', qbank:'Q-Bank'
+};
+sections.forEach(id => {
+  const dot = document.createElement('div');
+  dot.className = 'dot';
+  dot.dataset.target = id;
+  const tip = document.createElement('span');
+  tip.className = 'tip';
+  tip.textContent = dotLabels[id];
+  dot.appendChild(tip);
+  dot.addEventListener('click', () => {
+    document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  });
+  dock.appendChild(dot);
+});
+const dockDots = dock.querySelectorAll('.dot');
+
+function updateScrollState(){
+  const scrollY = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+  document.getElementById('topProgress').style.width = progress + '%';
+
+  let current = sections[0];
+  for(const id of sections){
+    const el = document.getElementById(id);
+    if(el && el.getBoundingClientRect().top <= window.innerHeight * 0.4){
+      current = id;
+    }
+  }
+  navButtons.forEach(b => b.classList.toggle('active', b.dataset.target === current));
+  dockDots.forEach(d => d.classList.toggle('active', d.dataset.target === current));
+}
+window.addEventListener('scroll', updateScrollState, {passive:true});
+updateScrollState();
+
+/* ============ ANTIGRAVITY CURSOR ============ */
+(function(){
+  const ring  = document.getElementById('cursor-ring');
+  const dot   = document.getElementById('cursor-dot');
+  const trail = document.getElementById('cursor-trail');
+  if(!ring || !dot) return;
+
+  let mx = window.innerWidth/2, my = window.innerHeight/2;
+  let rx = mx, ry = my;   // ring (lagged)
+  let tx = mx, ty = my;   // trail (more lagged)
+  let isVisible = false;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    if(!isVisible){
+      isVisible = true;
+      ring.style.opacity = '1';
+      dot.style.opacity  = '1';
+      trail.style.opacity = '1';
+    }
+    dot.style.left = mx + 'px';
+    dot.style.top  = my + 'px';
+  });
+
+  document.addEventListener('mouseleave', () => {
+    ring.style.opacity = '0'; dot.style.opacity = '0'; trail.style.opacity = '0';
+  });
+
+  document.addEventListener('mousedown', () => document.body.classList.add('cursor-clicking'));
+  document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-clicking'));
+
+  function animateCursor(){
+    // spring physics – ring chases mouse with elastic lag
+    rx += (mx - rx) * 0.10;
+    ry += (my - ry) * 0.10;
+    tx += (mx - tx) * 0.055;
+    ty += (my - ty) * 0.055;
+
+    ring.style.left  = rx + 'px';
+    ring.style.top   = ry + 'px';
+    trail.style.left = tx + 'px';
+    trail.style.top  = ty + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  ring.style.opacity = '0'; dot.style.opacity = '0'; trail.style.opacity = '0';
+  requestAnimationFrame(animateCursor);
+
+  // Cursor state changes on interactive elements
+  const hoverEls = document.querySelectorAll('button, a, .flip-card, .quiz-opt, .accordion-head, label');
+  hoverEls.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-on-tile'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-on-tile'));
+  });
+})();
+
+/* ============ TILE 3D TILT + CURSOR SPOTLIGHT ============ */
+(function(){
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion) return;
+
+  function bindTile(el){
+    let rafId = null;
+    let targetRx = 0, targetRy = 0;
+    let currentRx = 0, currentRy = 0;
+    let inside = false;
+
+    el.addEventListener('mouseenter', () => {
+      inside = true;
+      document.body.classList.add('cursor-on-tile');
+    });
+
+    el.addEventListener('mousemove', e => {
+      const rect   = el.getBoundingClientRect();
+      const cx     = rect.left + rect.width  / 2;
+      const cy     = rect.top  + rect.height / 2;
+      const dx     = (e.clientX - cx) / (rect.width  / 2);   // -1..1
+      const dy     = (e.clientY - cy) / (rect.height / 2);   // -1..1
+      targetRx = -dy * 9;
+      targetRy =  dx * 9;
+
+      // spotlight via CSS custom props
+      const px = ((e.clientX - rect.left) / rect.width)  * 100;
+      const py = ((e.clientY - rect.top)  / rect.height) * 100;
+      el.style.setProperty('--mx', px + '%');
+      el.style.setProperty('--my', py + '%');
+      el.style.setProperty('--sx', px + '%');
+      el.style.setProperty('--sy', py + '%');
+
+      if(!rafId) rafId = requestAnimationFrame(springLoop);
+    });
+
+    el.addEventListener('mouseleave', () => {
+      inside = false;
+      document.body.classList.remove('cursor-on-tile');
+      targetRx = 0; targetRy = 0;
+      if(!rafId) rafId = requestAnimationFrame(springLoop);
+    });
+
+    function springLoop(){
+      currentRx += (targetRx - currentRx) * 0.14;
+      currentRy += (targetRy - currentRy) * 0.14;
+      const dist = Math.abs(currentRx - targetRx) + Math.abs(currentRy - targetRy);
+
+      el.style.transform =
+        `perspective(900px) rotateX(${currentRx}deg) rotateY(${currentRy}deg) translateZ(${inside ? 6 : 0}px)`;
+
+      const glowX = 50 + currentRy * 2;
+      const glowY = 50 - currentRx * 2;
+      el.style.boxShadow =
+        `${-currentRy * 2}px ${currentRx * 2}px 30px rgba(0,0,0,0.5),
+         0 0 0 1px rgba(91,95,239,${inside ? 0.3 : 0.12}),
+         inset 0 1px 0 rgba(255,255,255,0.05)`;
+
+      if(dist > 0.05){
+        rafId = requestAnimationFrame(springLoop);
+      } else {
+        rafId = null;
+      }
+    }
+  }
+
+  // Bind all glass panels and flip-cards
+  document.querySelectorAll('.glass, .flip-card').forEach(bindTile);
+
+  // Quiz option magnetic hover
+  document.querySelectorAll('.quiz-opt').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const dx = (e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
+      const dy = (e.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
+      btn.style.transform = `translateX(${dx * 5}px) translateY(${dy * 3}px) translateX(4px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+})();
+</script>
+</body>
+</html>
